@@ -89,7 +89,7 @@
 <meta name="description" content="网站主要分享个人的一些经济，计量的学习笔记">
 <meta property="og:type" content="website">
 <meta property="og:title" content="肖夕木">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://xiaoximu.top/index.html">
 <meta property="og:site_name" content="肖夕木">
 <meta property="og:description" content="网站主要分享个人的一些经济，计量的学习笔记">
 <meta property="article:author" content="肖夕木">
@@ -124,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://xiaoximu.top/"/>
 
 
 
@@ -258,7 +258,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/stata%E7%BC%96%E8%BE%91%E5%99%A8-%E8%A6%81%E4%B8%8D%E8%A6%81%E5%AE%89%E8%A3%85.html">
+    <link itemprop="mainEntityOfPage" href="http://xiaoximu.top/stata%E7%BC%96%E8%BE%91%E5%99%A8-%E8%A6%81%E4%B8%8D%E8%A6%81%E5%AE%89%E8%A3%85.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="肖夕木">
@@ -277,7 +277,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/stata%E7%BC%96%E8%BE%91%E5%99%A8-%E8%A6%81%E4%B8%8D%E8%A6%81%E5%AE%89%E8%A3%85.html" itemprop="url">如何用vs code做stata的编辑器</a></h2>
+                <a class="post-title-link" href="/stata%E7%BC%96%E8%BE%91%E5%99%A8-%E8%A6%81%E4%B8%8D%E8%A6%81%E5%AE%89%E8%A3%85.html" itemprop="url">要不要为stata增加一个IDE编辑器</a></h2>
         
 
         <div class="post-meta">
@@ -343,7 +343,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  626
+                  642
                 </span>
               
 
@@ -381,212 +381,15 @@
 
       
         
-          
-            <ol>
-<li>为什么用vs code<br>vs code是微软旗下开发的一款代码编辑器。用vs code的作为stata编辑器的原因主要有以下几点：  <ol>
-<li>vs code可以编辑多种软件的代码，例如其自带的python,R,markdown等，以及你可以同样自行添加的matlab，lex等.</li>
-<li>vs code的高亮显示功能比较好。</li>
-<li>vs code对于编辑代码具有更流畅的体验，这体现在多方面，例如每次的换行，行数的标示，页面的展示以及上面提到的高亮功能，等等。</li>
-<li>作者安装的stata 16不能无法直接打开.do文件。必须进入stata操作页面打开。<br>对于作者本人来说，以上四点都是我所需要的。</li>
-</ol>
-</li>
-<li>如何用vs code作为stata的编辑器-以stata16为例   <ol>
-<li>安装vs code<br>vs code的安装较为简单，安装过程中一直选择默认即可。因此，此处就不再赘述。</li>
-<li>下载<a href="https://www.dropbox.com/s/5ylcn7c6wzln4jk/rundolines51.zip?dl=1" target="_blank" rel="noopener">rundolines</a>与 <a href="https://www.dropbox.com/s/coj6fn6t980tnz8/rundo51.zip?dl=1" target="_blank" rel="noopener">rundo</a><br>这两个文件是<a href="https://huebler.blogspot.com/2008/04/stata.html" target="_blank" rel="noopener">Friedrich Huebler</a>开发的。两个文件的下载，你可以直接点击上面标题下载，而如果由于无法科学上网不能下载的话，文末也会提供百度链接。</li>
-<li>配置rundolines与rundo<br>解压两个文件，解压之后将文件放置在stata16/personal路径下。由于两个文件的配置方法相同，所以之后便以配置rundo文件为例。<br>打开rundo51文件夹下的rundo.ini文件，如果你已经安装了vs code便可以用vs code打开，如果没有，也可以用记事本格式打开。<br>修改<code>statapath = &quot;C:\Program Files (x86)\Stata15\StataSE-64.exe&quot;</code>为你电脑中stata的启动路径。<br>修改<code>statawin = &quot;Stata/SE 15.0&quot;</code> 为你当前软件的版本号，版本号可以在打开的stata软件的左上角看到。<br>需注意修改的代码为开头没有<code>;</code>的代码。  </li>
-<li>配置vs code<br>首先在vs code的应用商店，也就是vs code左边框的第五个选项，如下图所示：<img src="http://q8xbxygkm.bkt.clouddn.com/1.png?e=1587135079&token=eizAmwohrkR4i2MJqgjnvIT6R6HDsXxvYatoaSOq:g0UzUXp1J7cWfAPXGgLpC_rLaQU=" alt="alt"><br>在该应用商店中搜索stata enhanced与code runner两款插件，并安装。 （同时如果英文不好的话，建议安装chineses这个中文插件）<br>在安装完成后，我们需要将以下代码  <blockquote>
-<p>{<br>“code-runner.executorMapByFileExtension”:{<br>“.do”:”D:\Qnap\stata项目\vscode编辑stata\rundo.exe”},<br>“code-runner.customCommand”: “D:\Qnap\stata项目\vscode编辑stata\rundolines.exe”,<br>“stataRun.stataPath”: “C:\Program Files\Stata16\StataMP-64.exe”,<br>“stataRun.whichApp”: “stataMP”,<br>“stataRun.pasteSpeed”: 1,<br>“stataRun.advancePosition”: false,<br>}      </p>
-</blockquote>
-</li>
-</ol>
-</li>
-</ol>
-<p>粘贴进code runner的配置文件。同时修改其相对路径。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="肖夕木">
-      <meta itemprop="description" content="经济学小白">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="肖夕木">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0.html" itemprop="url">我的第一篇博客测试文章</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-16T16:37:35+08:00">
-                2020-04-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B0%9D%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">尝试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  113
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="我的第一篇博客文章"><a href="#我的第一篇博客文章" class="headerlink" title="我的第一篇博客文章"></a>我的第一篇博客文章</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><p><em>斜体文本</em><br><strong>粗体文本</strong><br><strong><em>粗斜体文本</em></strong>  </p>
-<hr>
-<hr>
-<hr>
-<p><del>添加删除线</del>  </p>
-<p><u>带下划线的文本<u></p>
-<p>创建带脚注的文本 [^RUNOOB]   </p>
-<p>[^RUNOOB]: 一只菜鸟的学习 – 学习  </p>
-<ul>
-<li>第一项  </li>
-<li>第二项
+          <h1 id="为什么用vs-code"><a href="#为什么用vs-code" class="headerlink" title="为什么用vs code"></a>为什么用vs code</h1><p>vs code是微软旗下开发的一款代码编辑器。用vs code的作为stata编辑器的原因主要有以下几点：  </p>
+<ol>
+<li>vs code可以编辑多种软件的代码，例如其自带的python,R,markdown等，以及你可以同样自行添加的matlab，lex等.  </li>
+<li>vs code的高亮显示功能比较好。  </li>
+<li>vs code对于编辑代码具有更流畅的体验，这体现在多方面，例如每次的换行，行数的标示，页面的展示以及上面提到的高亮功能，等等。  </li>
+<li>作者安装的stata 16不能无法直接打开.do文件。必须进入stata操作页面打开。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0.html#more" rel="contents">
+            <a class="btn" href="/stata%E7%BC%96%E8%BE%91%E5%99%A8-%E8%A6%81%E4%B8%8D%E8%A6%81%E5%AE%89%E8%A3%85.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -674,7 +477,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -685,12 +488,21 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
