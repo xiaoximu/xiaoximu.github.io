@@ -343,7 +343,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  506
+                  626
                 </span>
               
 
@@ -359,7 +359,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -394,10 +394,14 @@
 <li>安装vs code<br>vs code的安装较为简单，安装过程中一直选择默认即可。因此，此处就不再赘述。</li>
 <li>下载<a href="https://www.dropbox.com/s/5ylcn7c6wzln4jk/rundolines51.zip?dl=1" target="_blank" rel="noopener">rundolines</a>与 <a href="https://www.dropbox.com/s/coj6fn6t980tnz8/rundo51.zip?dl=1" target="_blank" rel="noopener">rundo</a><br>这两个文件是<a href="https://huebler.blogspot.com/2008/04/stata.html" target="_blank" rel="noopener">Friedrich Huebler</a>开发的。两个文件的下载，你可以直接点击上面标题下载，而如果由于无法科学上网不能下载的话，文末也会提供百度链接。</li>
 <li>配置rundolines与rundo<br>解压两个文件，解压之后将文件放置在stata16/personal路径下。由于两个文件的配置方法相同，所以之后便以配置rundo文件为例。<br>打开rundo51文件夹下的rundo.ini文件，如果你已经安装了vs code便可以用vs code打开，如果没有，也可以用记事本格式打开。<br>修改<code>statapath = &quot;C:\Program Files (x86)\Stata15\StataSE-64.exe&quot;</code>为你电脑中stata的启动路径。<br>修改<code>statawin = &quot;Stata/SE 15.0&quot;</code> 为你当前软件的版本号，版本号可以在打开的stata软件的左上角看到。<br>需注意修改的代码为开头没有<code>;</code>的代码。  </li>
-<li>配置vs code<br>首先在vs code的应用商店，也就是vs code左边框的第五个选项，如下图所示：  </li>
+<li>配置vs code<br>首先在vs code的应用商店，也就是vs code左边框的第五个选项，如下图所示：<img src="http://q8xbxygkm.bkt.clouddn.com/1.png?e=1587135079&token=eizAmwohrkR4i2MJqgjnvIT6R6HDsXxvYatoaSOq:g0UzUXp1J7cWfAPXGgLpC_rLaQU=" alt="alt"><br>在该应用商店中搜索stata enhanced与code runner两款插件，并安装。 （同时如果英文不好的话，建议安装chineses这个中文插件）<br>在安装完成后，我们需要将以下代码  <blockquote>
+<p>{<br>“code-runner.executorMapByFileExtension”:{<br>“.do”:”D:\Qnap\stata项目\vscode编辑stata\rundo.exe”},<br>“code-runner.customCommand”: “D:\Qnap\stata项目\vscode编辑stata\rundolines.exe”,<br>“stataRun.stataPath”: “C:\Program Files\Stata16\StataMP-64.exe”,<br>“stataRun.whichApp”: “stataMP”,<br>“stataRun.pasteSpeed”: 1,<br>“stataRun.advancePosition”: false,<br>}      </p>
+</blockquote>
+</li>
 </ol>
 </li>
 </ol>
+<p>粘贴进code runner的配置文件。同时修改其相对路径。</p>
 
           
         
