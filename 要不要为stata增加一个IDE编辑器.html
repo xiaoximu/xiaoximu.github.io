@@ -86,17 +86,17 @@
 
 
 
-<meta name="description" content="为什么用vs codevs code是微软旗下开发的一款代码编辑器。用vs code的作为stata编辑器的原因主要有以下几点：    vs code可以编辑多种软件的代码，例如其自带的python,R,markdown等，以及你可以同样自行添加的matlab，lex等.   vs code的高亮显示功能比较好。   vs code对于编辑代码具有更流畅的体验，这体现在多方面，例如每次的换行，行数">
+<meta name="description" content="为什么写这篇文章之前看到连玉君老师的连享会的公众号上发了几篇关于stata编辑器的文章。但是，感觉那几款编辑器都不太适合我，因为那几款编辑器支持的语言有些少，界面我也不太喜欢。所以就鼓捣了下vs code做stata的编辑器。今天记录下我折腾的过程。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="要不要为stata增加一个IDE编辑器">
-<meta property="og:url" content="http://xiaoximu.top/stata%E7%BC%96%E8%BE%91%E5%99%A8-%E8%A6%81%E4%B8%8D%E8%A6%81%E5%AE%89%E8%A3%85.html">
+<meta property="og:url" content="http://xiaoximu.top/%E8%A6%81%E4%B8%8D%E8%A6%81%E4%B8%BAstata%E5%A2%9E%E5%8A%A0%E4%B8%80%E4%B8%AAIDE%E7%BC%96%E8%BE%91%E5%99%A8.html">
 <meta property="og:site_name" content="肖夕木">
-<meta property="og:description" content="为什么用vs codevs code是微软旗下开发的一款代码编辑器。用vs code的作为stata编辑器的原因主要有以下几点：    vs code可以编辑多种软件的代码，例如其自带的python,R,markdown等，以及你可以同样自行添加的matlab，lex等.   vs code的高亮显示功能比较好。   vs code对于编辑代码具有更流畅的体验，这体现在多方面，例如每次的换行，行数">
+<meta property="og:description" content="为什么写这篇文章之前看到连玉君老师的连享会的公众号上发了几篇关于stata编辑器的文章。但是，感觉那几款编辑器都不太适合我，因为那几款编辑器支持的语言有些少，界面我也不太喜欢。所以就鼓捣了下vs code做stata的编辑器。今天记录下我折腾的过程。">
 <meta property="og:image" content="http://q8xbxygkm.bkt.clouddn.com/1.png?e=1587135079token=eizAmwohrkR4i2MJqgjnvIT6R6HDsXxvYatoaSOq:g0UzUXp1J7cWfAPXGgLpC_rLaQU=">
 <meta property="og:image" content="http://q8xbxygkm.bkt.clouddn.com/Snipaste_2020-04-18_13-34-31.png">
 <meta property="og:image" content="http://q8xbxygkm.bkt.clouddn.com/Snipaste_2020-04-18_13-42-31.png">
 <meta property="article:published_time" content="2020-04-17T07:04:06.000Z">
-<meta property="article:modified_time" content="2020-04-18T06:10:24.345Z">
+<meta property="article:modified_time" content="2020-04-18T12:45:11.465Z">
 <meta property="article:author" content="肖夕木">
 <meta property="article:tag" content="便捷">
 <meta name="twitter:card" content="summary">
@@ -130,7 +130,7 @@
 
 
 
-  <link rel="canonical" href="http://xiaoximu.top/stata编辑器-要不要安装.html"/>
+  <link rel="canonical" href="http://xiaoximu.top/要不要为stata增加一个IDE编辑器.html"/>
 
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xiaoximu.top/stata%E7%BC%96%E8%BE%91%E5%99%A8-%E8%A6%81%E4%B8%8D%E8%A6%81%E5%AE%89%E8%A3%85.html">
+    <link itemprop="mainEntityOfPage" href="http://xiaoximu.top/%E8%A6%81%E4%B8%8D%E8%A6%81%E4%B8%BAstata%E5%A2%9E%E5%8A%A0%E4%B8%80%E4%B8%AAIDE%E7%BC%96%E8%BE%91%E5%99%A8.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="肖夕木">
@@ -351,7 +351,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  642
+                  781
                 </span>
               
 
@@ -388,21 +388,22 @@
       
 
       
-        <h1 id="为什么用vs-code"><a href="#为什么用vs-code" class="headerlink" title="为什么用vs code"></a>为什么用vs code</h1><p>vs code是微软旗下开发的一款代码编辑器。用vs code的作为stata编辑器的原因主要有以下几点：  </p>
+        <h1 id="为什么写这篇文章"><a href="#为什么写这篇文章" class="headerlink" title="为什么写这篇文章"></a>为什么写这篇文章</h1><p>之前看到连玉君老师的连享会的公众号上发了几篇关于stata编辑器的文章。但是，感觉那几款编辑器都不太适合我，因为那几款编辑器支持的语言有些少，界面我也不太喜欢。所以就鼓捣了下vs code做stata的编辑器。<br>今天记录下我折腾的过程。</p>
+<a id="more"></a> 
+<h1 id="为什么用vs-code做stata的编辑器"><a href="#为什么用vs-code做stata的编辑器" class="headerlink" title="为什么用vs code做stata的编辑器"></a>为什么用vs code做stata的编辑器</h1><p>vs code是微软旗下开发的一款代码编辑器。其兼容性很好，而且体积较小。用vs code的作为stata编辑器的原因主要有以下几点：  </p>
 <ol>
 <li>vs code可以编辑多种软件的代码，例如其自带的python,R,markdown等，以及你可以同样自行添加的matlab，lex等.  </li>
 <li>vs code的高亮显示功能比较好。  </li>
 <li>vs code对于编辑代码具有更流畅的体验，这体现在多方面，例如每次的换行，行数的标示，页面的展示以及上面提到的高亮功能，等等。  </li>
-<li>作者安装的stata 16不能无法直接打开.do文件。必须进入stata操作页面打开。  <a id="more"></a>    
-
-</li>
-</ol>
-<h1 id="如何用vs-code作为stata的编辑器-以stata16为例"><a href="#如何用vs-code作为stata的编辑器-以stata16为例" class="headerlink" title="如何用vs code作为stata的编辑器-以stata16为例"></a>如何用vs code作为stata的编辑器-以stata16为例</h1><ol>
+<li>作者安装的stata 16不能无法直接打开.do文件。必须进入stata操作页面打开。  <h1 id="如何用vs-code作为stata的编辑器-以stata16为例"><a href="#如何用vs-code作为stata的编辑器-以stata16为例" class="headerlink" title="如何用vs code作为stata的编辑器-以stata16为例"></a>如何用vs code作为stata的编辑器-以stata16为例</h1></li>
 <li>安装vs code<br> vs code的安装较为简单，安装过程中一直选择默认即可。因此，此处就不再赘述。</li>
 <li>下载<a href="https://www.dropbox.com/s/5ylcn7c6wzln4jk/rundolines51.zip?dl=1" target="_blank" rel="noopener">rundolines</a>与 <a href="https://www.dropbox.com/s/coj6fn6t980tnz8/rundo51.zip?dl=1" target="_blank" rel="noopener">rundo</a><br>这两个文件是<a href="https://huebler.blogspot.com/2008/04/stata.html" target="_blank" rel="noopener">Friedrich Huebler</a>开发的。两个文件的下载，你可以直接点击上面标题下载，而如果由于无法科学上网不能下载的话，文末也会提供百度链接。</li>
 <li>配置rundolines与rundo<br>解压两个文件，解压之后将文件放置在stata16/personal路径下。由于两个文件的配置方法相同，所以之后便以配置rundo文件为例。<br>打开rundo51文件夹下的rundo.ini文件，如果你已经安装了vs code便可以用vs code打开，如果没有，也可以用记事本格式打开。<br>修改<code>statapath = &quot;C:\Program Files (x86)\Stata15\StataSE-64.exe&quot;</code>为你电脑中stata的启动路径。<br>修改<code>statawin = &quot;Stata/SE 15.0&quot;</code> 为你当前软件的版本号，版本号可以在打开的stata软件的左上角看到。<br>需注意修改的代码为开头没有<code>;</code>的代码。  </li>
 <li>配置vs code<br>首先在vs code的应用商店，也就是vs code左边框的第五个选项，如下图所示：<img src="http://q8xbxygkm.bkt.clouddn.com/1.png?e=1587135079token=eizAmwohrkR4i2MJqgjnvIT6R6HDsXxvYatoaSOq:g0UzUXp1J7cWfAPXGgLpC_rLaQU=" alt="alt"><br>在该应用商店中搜索stata enhanced与code runner两款插件，并安装。 （同时如果英文不好的话，建议安装chineses这个中文插件）<br> 在安装完成后，我们需要将以下代码  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"code-runner.executorMapByFileExtension"</span>:&#123;</span><br><span class="line">       <span class="string">".do"</span>:<span class="string">"D:\\Qnap\\stata项目\\vscode编辑stata\\rundo.exe"</span>&#125;,</span><br><span class="line">    <span class="string">"code-runner.customCommand"</span>: <span class="string">"D:\\Qnap\\stata项目\\vscode编辑stata\\rundolines.exe"</span>,</span><br><span class="line">    <span class="string">"stataRun.stataPath"</span>: <span class="string">"C:\\Program Files\\Stata16\\StataMP-64.exe"</span>,</span><br><span class="line">    <span class="string">"stataRun.whichApp"</span>: <span class="string">"stataMP"</span>,</span><br><span class="line">    <span class="string">"stataRun.pasteSpeed"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">"stataRun.advancePosition"</span>: <span class="literal">false</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-粘贴进code runner的配置文件。同时修改其相对路径。如果不知道code runner的配置文件在哪里，可参考下图。<br><img src="http://q8xbxygkm.bkt.clouddn.com/Snipaste_2020-04-18_13-34-31.png" alt=""><br><img src="http://q8xbxygkm.bkt.clouddn.com/Snipaste_2020-04-18_13-42-31.png" alt=""><br>至此便全部配置完成。</li>
+粘贴进code runner的配置文件。同时修改其相对路径。如果不知道code runner的配置文件在哪里，可参考下图。<br><img src="http://q8xbxygkm.bkt.clouddn.com/Snipaste_2020-04-18_13-34-31.png" alt=""><br><img src="http://q8xbxygkm.bkt.clouddn.com/Snipaste_2020-04-18_13-42-31.png" alt=""><br>至此便全部配置完成。<blockquote>
+<p>rundo文件的百度链接：<a href="https://pan.baidu.com/s/1GfEcO1n0GvDYeiyCXlQ6Hg" target="_blank" rel="noopener">https://pan.baidu.com/s/1GfEcO1n0GvDYeiyCXlQ6Hg</a><br>提取码：w0zh</p>
+</blockquote>
+</li>
 </ol>
 
       
@@ -453,7 +454,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://xiaoximu.top/stata%E7%BC%96%E8%BE%91%E5%99%A8-%E8%A6%81%E4%B8%8D%E8%A6%81%E5%AE%89%E8%A3%85.html" title="要不要为stata增加一个IDE编辑器">http://xiaoximu.top/stata%E7%BC%96%E8%BE%91%E5%99%A8-%E8%A6%81%E4%B8%8D%E8%A6%81%E5%AE%89%E8%A3%85.html</a>
+    <a href="http://xiaoximu.top/%E8%A6%81%E4%B8%8D%E8%A6%81%E4%B8%BAstata%E5%A2%9E%E5%8A%A0%E4%B8%80%E4%B8%AAIDE%E7%BC%96%E8%BE%91%E5%99%A8.html" title="要不要为stata增加一个IDE编辑器">http://xiaoximu.top/%E8%A6%81%E4%B8%8D%E8%A6%81%E4%B8%BAstata%E5%A2%9E%E5%8A%A0%E4%B8%80%E4%B8%AAIDE%E7%BC%96%E8%BE%91%E5%99%A8.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -614,7 +615,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么用vs-code"><span class="nav-number">1.</span> <span class="nav-text">为什么用vs code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何用vs-code作为stata的编辑器-以stata16为例"><span class="nav-number">2.</span> <span class="nav-text">如何用vs code作为stata的编辑器-以stata16为例</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么写这篇文章"><span class="nav-number">1.</span> <span class="nav-text">为什么写这篇文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么用vs-code做stata的编辑器"><span class="nav-number">2.</span> <span class="nav-text">为什么用vs code做stata的编辑器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何用vs-code作为stata的编辑器-以stata16为例"><span class="nav-number">3.</span> <span class="nav-text">如何用vs code作为stata的编辑器-以stata16为例</span></a></li></ol></div>
             
 
           </div>
