@@ -1,0 +1,26 @@
+2. 如何用vs code作为stata的编辑器-以stata16为例   
+    1. 安装vs code
+    vs code的安装较为简单，安装过程中一直选择默认即可。因此，此处就不再赘述。
+    2. 下载[rundolines](https://www.dropbox.com/s/5ylcn7c6wzln4jk/rundolines51.zip?dl=1)与 [rundo](https://www.dropbox.com/s/coj6fn6t980tnz8/rundo51.zip?dl=1)  
+    这两个文件是[Friedrich Huebler](https://huebler.blogspot.com/2008/04/stata.html)开发的。两个文件的下载，你可以直接点击上面标题下载，而如果由于无法科学上网不能下载的话，文末也会提供百度链接。
+    3. 配置rundolines与rundo  
+    解压两个文件，解压之后将文件放置在stata16/personal路径下。由于两个文件的配置方法相同，所以之后便以配置rundo文件为例。  
+    打开rundo51文件夹下的rundo.ini文件，如果你已经安装了vs code便可以用vs code打开，如果没有，也可以用记事本格式打开。  
+    修改`statapath = "C:\Program Files (x86)\Stata15\StataSE-64.exe"`为你电脑中stata的启动路径。  
+    修改`statawin = "Stata/SE 15.0"` 为你当前软件的版本号，版本号可以在打开的stata软件的左上角看到。  
+    需注意修改的代码为开头没有`;`的代码。  
+    4. 配置vs code  
+    首先在vs code的应用商店，也就是vs code左边框的第五个选项，如下图所示：![alt](http://q8xbxygkm.bkt.clouddn.com/1.png?e=1587135079&token=eizAmwohrkR4i2MJqgjnvIT6R6HDsXxvYatoaSOq:g0UzUXp1J7cWfAPXGgLpC_rLaQU=)  
+    在该应用商店中搜索stata enhanced与code runner两款插件，并安装。 （同时如果英文不好的话，建议安装chineses这个中文插件）
+    在安装完成后，我们需要将以下代码  
+>{
+    "code-runner.executorMapByFileExtension":{
+       ".do":"D:\\Qnap\\stata项目\\vscode编辑stata\\rundo.exe"},
+    "code-runner.customCommand": "D:\\Qnap\\stata项目\\vscode编辑stata\\rundolines.exe",
+    "stataRun.stataPath": "C:\\Program Files\\Stata16\\StataMP-64.exe",
+    "stataRun.whichApp": "stataMP",
+    "stataRun.pasteSpeed": 1,
+    "stataRun.advancePosition": false,
+}      
+
+粘贴进code runner的配置文件。同时修改其相对路径。
