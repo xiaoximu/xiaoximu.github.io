@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="DEA," />
+  <meta name="keywords" content="数据清洗," />
 
 
 
@@ -86,17 +86,20 @@
 
 
 
-<meta name="description" content="数据包络分析（DEA）是是由美国著名运筹学家 A.Charnes（查恩斯）、W.W.Cooper（库铂）、E.Rhodes（罗兹）于 1978 年首先提出，在相对效率评价概念基础上发展起来的一种非参数检验方法。此次文章主要介绍数据包络分析各种基础模型，以及在R中实现的方法。">
+<meta name="description" content="从各种数据库中下载下来.csv文件后，这些文件往往都会存在1998-2019等多个文件夹中。而且这些.csv文件都是以中文命名的没有规律的文件。而处理数据往往是要对这整个面板数据处理的。因此，如何合并成一个数据文件就成为了一个难题。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="R:数据包络分析（DEA）简明教程（一）">
-<meta property="og:url" content="http://xiaoximu.top/R-%E6%95%B0%E6%8D%AE%E5%8C%85%E7%BB%9C%E5%88%86%E6%9E%90%EF%BC%88DEA%EF%BC%89%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B.html">
+<meta property="og:title" content="stata-如何快速合并多个文件夹下的数据文件">
+<meta property="og:url" content="http://xiaoximu.top/stata-%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6.html">
 <meta property="og:site_name" content="肖夕木的自习室">
-<meta property="og:description" content="数据包络分析（DEA）是是由美国著名运筹学家 A.Charnes（查恩斯）、W.W.Cooper（库铂）、E.Rhodes（罗兹）于 1978 年首先提出，在相对效率评价概念基础上发展起来的一种非参数检验方法。此次文章主要介绍数据包络分析各种基础模型，以及在R中实现的方法。">
-<meta property="article:published_time" content="2020-04-24T08:47:39.000Z">
-<meta property="article:modified_time" content="2020-04-24T13:10:13.023Z">
+<meta property="og:description" content="从各种数据库中下载下来.csv文件后，这些文件往往都会存在1998-2019等多个文件夹中。而且这些.csv文件都是以中文命名的没有规律的文件。而处理数据往往是要对这整个面板数据处理的。因此，如何合并成一个数据文件就成为了一个难题。">
+<meta property="og:image" content="http://q8xbxygkm.bkt.clouddn.com/rcd.png">
+<meta property="og:image" content="http://q8xbxygkm.bkt.clouddn.com/returnlist.png">
+<meta property="article:published_time" content="2020-04-24T12:47:38.000Z">
+<meta property="article:modified_time" content="2020-04-24T13:40:29.739Z">
 <meta property="article:author" content="肖夕木">
-<meta property="article:tag" content="DEA">
+<meta property="article:tag" content="数据清洗">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://q8xbxygkm.bkt.clouddn.com/rcd.png">
 
 
 
@@ -126,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://xiaoximu.top/R-数据包络分析（DEA）简明教程.html"/>
+  <link rel="canonical" href="http://xiaoximu.top/stata-如何快速合并多个文件夹下的数据文件.html"/>
 
 
 
 
 
-  <title>R:数据包络分析（DEA）简明教程（一） | 肖夕木的自习室</title>
+  <title>stata-如何快速合并多个文件夹下的数据文件 | 肖夕木的自习室</title>
   
 
 
@@ -269,7 +272,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xiaoximu.top/R-%E6%95%B0%E6%8D%AE%E5%8C%85%E7%BB%9C%E5%88%86%E6%9E%90%EF%BC%88DEA%EF%BC%89%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B.html">
+    <link itemprop="mainEntityOfPage" href="http://xiaoximu.top/stata-%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="肖夕木">
@@ -286,7 +289,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">R:数据包络分析（DEA）简明教程（一）</h2>
+          <h2 class="post-title" itemprop="name headline">stata-如何快速合并多个文件夹下的数据文件</h2>
         
 
         <div class="post-meta">
@@ -298,7 +301,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-24T16:47:39+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-24T20:47:38+08:00">
                 2020-04-24
               </time>
             
@@ -357,7 +360,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  518
+                  547
                 </span>
               
 
@@ -373,7 +376,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -394,61 +397,15 @@
       
 
       
-        <p>数据包络分析（DEA）是是由美国著名运筹学家 A.Charnes（查恩斯）、W.W.Cooper（库铂）、E.Rhodes（罗兹）于 1978 年首先提出，在相对效率评价概念基础上发展起来的一种非参数检验方法。此次文章主要介绍数据包络分析各种基础模型，以及在R中实现的方法。<br><a id="more"></a>  </p>
-<h1 id="技术效率的概念"><a href="#技术效率的概念" class="headerlink" title="技术效率的概念"></a>技术效率的概念</h1><p>在数据包络分析中，技术效率是指一个生产单元（DMU）的生产水平达到该行业技术水平的程度。技术效率可以从投入和产出两个角度来衡量，在投入既定的情况下，技术效率由产出最大化的程度来衡量。在产出既定的情况下，技术效率由投入最小化的程度来衡量。当然，在计算TFP的过程中，一般都是投入既定的。<br>下面举一个一种投入一种产出时的例子，来帮助我们理解技术效率的概念。       </p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>单位</th>
-<th>$x$（投入）</th>
-<th>$y$（产出）</th>
-<th>$y/x$</th>
-<th>$y/x$(标准化)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A</td>
-<td>2</td>
-<td>1</td>
-<td>0.5</td>
-<td>0.625</td>
-</tr>
-<tr>
-<td>B</td>
-<td>3</td>
-<td>2</td>
-<td>0.667</td>
-<td>0.533</td>
-</tr>
-<tr>
-<td>C</td>
-<td>4</td>
-<td>3</td>
-<td>0.75</td>
-<td>0.938</td>
-</tr>
-<tr>
-<td>D</td>
-<td>5</td>
-<td>4</td>
-<td>0.8</td>
-<td>1.00</td>
-</tr>
-<tr>
-<td>E</td>
-<td>5</td>
-<td>2</td>
-<td>0.4</td>
-<td>0.5</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>在此表中，$y/x$反应各个生产单元技术效率的高低，$y/x$(标准化)是将各单元的$y/x$除以其中的最大值。这样就是为了更好的比较这一数值。<br>当涉及多个产出时，就会对各个投入与产出赋予一定的权重，然后分别加权，计算产出投入比。如：</p>
-<script type="math/tex; mode=display">v = v_1x_1+v_2x_2+...+v_nx_n</script><script type="math/tex; mode=display">u=u_1y_1+u_2y_2+...+u_ny_n</script><p>则产出投入比为$u/v$<br>数据包络分析就是在讨论如何通过数据本身来获得权重，从而计算各个DMU的技术效率。  </p>
-<h1 id="CCR模型与BCC模型"><a href="#CCR模型与BCC模型" class="headerlink" title="CCR模型与BCC模型"></a>CCR模型与BCC模型</h1><p>CCR模型是Charnes、Cooper、Rhodes三人发表的“Measuring the efﬁciency of decision making units”中提出的模型。而由于CCR模型基于规模效益不变（CRS）假说，因此又可称之为CRS模型。<br>未完待续。。。。 </p>
+        <p>从各种数据库中下载下来.csv文件后，这些文件往往都会存在1998-2019等多个文件夹中。而且这些.csv文件都是以中文命名的没有规律的文件。而处理数据往往是要对这整个面板数据处理的。因此，如何合并成一个数据文件就成为了一个难题。<br><a id="more"></a>  </p>
+<h1 id="解决思路与难点"><a href="#解决思路与难点" class="headerlink" title="解决思路与难点"></a>解决思路与难点</h1><h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><p>使用循环语句对各个文件夹进行处理。并将处理好的文件存储到一个新文件夹内。然后再将这个文件夹内的所有数据合并为一个.dta文件。 </p>
+<h2 id="难点"><a href="#难点" class="headerlink" title="难点"></a>难点</h2><p>如何通过命令进入各个文件夹以及如何快速合并各个文件夹内的.csv据。  </p>
+<h2 id="对策"><a href="#对策" class="headerlink" title="对策"></a>对策</h2><p>使用<code>rcd</code>获取文件夹的信息。并存储到暂元中<br>使用<code>openall</code>合并.csv或.dta文件。<br>使用<code>cd</code>进入各个文件夹中<br>参见<code>help rcd</code>，<code>help openall</code>,<code>help openall</code><br>若有命令stata提示未安装，可使用<code>ssc install openall</code>命令进行安装。  </p>
+<h1 id="代码的实现"><a href="#代码的实现" class="headerlink" title="代码的实现"></a>代码的实现</h1><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">qui</span> rcd</span><br><span class="line"><span class="keyword">local</span> k = 1997 <span class="comment">//当前文件夹</span></span><br><span class="line"><span class="keyword">forvalues</span> i = 1(1)`<span class="built_in">r</span>(tdirs)'&#123;</span><br><span class="line">    <span class="keyword">cd</span> `c(sysdir_personal)'TFP\example</span><br><span class="line">	<span class="keyword">qui</span> rcd</span><br><span class="line">	<span class="keyword">cd</span> <span class="string">"`r(ndir`i')'"</span></span><br><span class="line">	openall *,<span class="keyword">insheet</span> <span class="comment">//合并当前文件数据</span></span><br><span class="line">	<span class="keyword">local</span> k = <span class="symbol">`k'</span> + 1</span><br><span class="line">	<span class="keyword">dis</span> <span class="symbol">`k'</span> <span class="comment">//作者本人为了方便查看代码运行结果</span></span><br><span class="line">	<span class="keyword">cd</span> `c(sysdir_personal)'TFP\data <span class="comment">//将文件全部保存至data</span></span><br><span class="line">	<span class="keyword">save</span> <span class="symbol">`k'</span>.dta ,<span class="keyword">replace</span> <span class="comment">//保存为.dta文件，以年份命名</span></span><br><span class="line">	<span class="keyword">clear</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="代码的详细介绍"><a href="#代码的详细介绍" class="headerlink" title="代码的详细介绍"></a>代码的详细介绍</h2><p><code>qui rcd</code>是获取当前文件夹下所有文件的目录。运行此命令后，结果如下<br><img src="http://q8xbxygkm.bkt.clouddn.com/rcd.png" alt=""><br>使用<code>return list</code>命令查看存储<br><img src="http://q8xbxygkm.bkt.clouddn.com/returnlist.png" alt=""><br> 如图可以看到暂元<code>r(tdirs)</code>中存储的是共有多少个文件夹.<br>暂元<code>r(ndiri)</code>中存储的是各个文件夹的路径名。<br><code>openall *,insheet</code>是合并当前文件夹下的所有.csv文件。如果不加option选项<code>insheet</code>则是合并所有.dta文件。  </p>
+<blockquote>
+<p>注意在循环语句中也是要用<code>rcd</code>命令重新获取当前文件的路径。否则循环一次便会进入data路径内。<br>且每个读者需自行选择进入那个文件夹以适配自己的需要。</p>
+</blockquote>
 
       
     </div>
@@ -498,7 +455,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://xiaoximu.top/R-%E6%95%B0%E6%8D%AE%E5%8C%85%E7%BB%9C%E5%88%86%E6%9E%90%EF%BC%88DEA%EF%BC%89%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B.html" title="R:数据包络分析（DEA）简明教程（一）">http://xiaoximu.top/R-%E6%95%B0%E6%8D%AE%E5%8C%85%E7%BB%9C%E5%88%86%E6%9E%90%EF%BC%88DEA%EF%BC%89%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B.html</a>
+    <a href="http://xiaoximu.top/stata-%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6.html" title="stata-如何快速合并多个文件夹下的数据文件">http://xiaoximu.top/stata-%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -513,7 +470,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/DEA/" rel="tag"># DEA</a>
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/" rel="tag"># 数据清洗</a>
           
         </div>
       
@@ -526,8 +483,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/%E8%A6%81%E4%B8%8D%E8%A6%81%E4%B8%BAstata%E5%A2%9E%E5%8A%A0%E4%B8%80%E4%B8%AAIDE%E7%BC%96%E8%BE%91%E5%99%A8.html" rel="next" title="要不要为stata增加一个IDE编辑器">
-                <i class="fa fa-chevron-left"></i> 要不要为stata增加一个IDE编辑器
+              <a href="/R-%E6%95%B0%E6%8D%AE%E5%8C%85%E7%BB%9C%E5%88%86%E6%9E%90%EF%BC%88DEA%EF%BC%89%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B.html" rel="next" title="R:数据包络分析（DEA）简明教程（一）">
+                <i class="fa fa-chevron-left"></i> R:数据包络分析（DEA）简明教程（一）
               </a>
             
           </div>
@@ -535,10 +492,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/stata-%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6.html" rel="prev" title="stata-如何快速合并多个文件夹下的数据文件">
-                stata-如何快速合并多个文件夹下的数据文件 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -679,7 +632,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#技术效率的概念"><span class="nav-number">1.</span> <span class="nav-text">技术效率的概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CCR模型与BCC模型"><span class="nav-number">2.</span> <span class="nav-text">CCR模型与BCC模型</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#解决思路与难点"><span class="nav-number">1.</span> <span class="nav-text">解决思路与难点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决思路"><span class="nav-number">1.1.</span> <span class="nav-text">解决思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#难点"><span class="nav-number">1.2.</span> <span class="nav-text">难点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对策"><span class="nav-number">1.3.</span> <span class="nav-text">对策</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码的实现"><span class="nav-number">2.</span> <span class="nav-text">代码的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.1.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码的详细介绍"><span class="nav-number">2.2.</span> <span class="nav-text">代码的详细介绍</span></a></li></ol></li></ol></div>
             
 
           </div>
