@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mata," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="mata是stata的一种编程语言，类似于c或是c++等语言，其基本操作是对矩阵的操作。本篇文章只是mata语言的一个简明教程，可以帮助你认识程序中的各个大的框架，了解mata的一些基础知识。而没有深入的探讨mata中的各个函数。关于mata的中文资料很少，只是看到连玉君老师分享过一篇文章。希望本文能对他人学习mata提供一些帮助。mata学习的英文资料，可关注我的公众号：“肖夕木的自习室” 回复">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mata学习-《Coding with Mata in Stata》">
+<meta property="og:url" content="http://xiaoximu.top/mata%E5%AD%A6%E4%B9%A0.html">
+<meta property="og:site_name" content="肖夕木的自习室">
+<meta property="og:description" content="mata是stata的一种编程语言，类似于c或是c++等语言，其基本操作是对矩阵的操作。本篇文章只是mata语言的一个简明教程，可以帮助你认识程序中的各个大的框架，了解mata的一些基础知识。而没有深入的探讨mata中的各个函数。关于mata的中文资料很少，只是看到连玉君老师分享过一篇文章。希望本文能对他人学习mata提供一些帮助。mata学习的英文资料，可关注我的公众号：“肖夕木的自习室” 回复">
+<meta property="article:published_time" content="2020-04-27T06:45:52.000Z">
+<meta property="article:modified_time" content="2020-04-29T01:43:14.426Z">
+<meta property="article:author" content="肖夕木">
+<meta property="article:tag" content="mata">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xiaoximu.top/mata学习.html"/>
+
+
+
+
+
+  <title>mata学习-《Coding with Mata in Stata》 | 肖夕木的自习室</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">肖夕木的自习室</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">一个经济学专业学生的学习分享网站</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xiaoximu.top/mata%E5%AD%A6%E4%B9%A0.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="肖夕木">
+      <meta itemprop="description" content="经济学小白">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="肖夕木的自习室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">mata学习-《Coding with Mata in Stata》</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-27T14:45:52+08:00">
+                2020-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E9%87%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">计量</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">阅读数 <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>mata是stata的一种编程语言，类似于c或是c++等语言，其基本操作是对矩阵的操作。<br>本篇文章只是mata语言的一个简明教程，可以帮助你认识程序中的各个大的框架，了解mata的一些基础知识。而没有深入的探讨mata中的各个函数。<br>关于mata的中文资料很少，只是看到连玉君老师分享过一篇文章。希望本文能对他人学习mata提供一些帮助。mata学习的英文资料，可关注我的公众号：“肖夕木的自习室” 回复mata获取<br><a id="more"></a></p>
+<h1 id="1-为什么学习mata"><a href="#1-为什么学习mata" class="headerlink" title="1. 为什么学习mata"></a>1. 为什么学习mata</h1><p>开始学习mata是因为在stata中许多程序都是用mata编写的，若是想将这些程序改进以适用于自己的需要，则必然要学习mata  </p>
+<h1 id="2-在stata中使用mata"><a href="#2-在stata中使用mata" class="headerlink" title="2. 在stata中使用mata"></a>2. 在stata中使用mata</h1><h2 id="2-1-命令行的使用"><a href="#2-1-命令行的使用" class="headerlink" title="2.1 命令行的使用"></a>2.1 命令行的使用</h2><p>mata可以直接在stata的命令窗口中使用，输入命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mata</span><br></pre></td></tr></table></figure><br>即进入mata工作区，接下来输入的所有命令都将被解释成mata命令。<br>输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">end</span><br></pre></td></tr></table></figure><br>退出mata工作区，返回到stata平时使用的工作区。</p>
+<blockquote>
+<p>注意：在mata工作区中定义的所有函数和矩阵在你退出mata工作区后，都会保存在mata工作区中，当再输入<code>mata</code>时，可以调用之前定义的所有函数和矩阵。  </p>
+<h2 id="2-2-在-do文件中使用mata"><a href="#2-2-在-do文件中使用mata" class="headerlink" title="2.2 在.do文件中使用mata"></a>2.2 在.do文件中使用mata</h2><p>在.do文件中可以多次使用<code>mata</code>命令，而且每次退出后，再进入mata工作区时，进入的是同一个工作区  </p>
+<h2 id="2-3-在-ado文件中使用mata"><a href="#2-3-在-ado文件中使用mata" class="headerlink" title="2.3 在.ado文件中使用mata"></a>2.3 在.ado文件中使用mata</h2><p>有关使用mata生成新的命令的内容见section 7  </p>
+<h1 id="3-mata中的矩阵"><a href="#3-mata中的矩阵" class="headerlink" title="3. mata中的矩阵"></a>3. mata中的矩阵</h1><h2 id="3-1-create矩阵，向量和标量"><a href="#3-1-create矩阵，向量和标量" class="headerlink" title="3.1 create矩阵，向量和标量"></a>3.1 create矩阵，向量和标量</h2><h3 id="3-1-1-创建矩阵"><a href="#3-1-1-创建矩阵" class="headerlink" title="3.1.1 创建矩阵"></a>3.1.1 创建矩阵</h3><p>有两种创建矩阵的方式，一种是创建整个矩阵，用<code>\</code>分行，用<code>,</code>分隔列。如创建一个2行2列的矩阵：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A&#x3D;(1,2\3,4)</span><br></pre></td></tr></table></figure><br>或者是创建一个空矩阵，例如创建一个2行三列的空矩阵：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">B&#x3D;J(2,3,.)</span><br></pre></td></tr></table></figure><br>然后填充数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">B[1,1] &#x3D; 5</span><br><span class="line">B[1,2] &#x3D; 6</span><br><span class="line">B[1,3] &#x3D; 7</span><br><span class="line">B[2,1] &#x3D; 8</span><br><span class="line">B[2,2] &#x3D; 9</span><br><span class="line">B[2,3] &#x3D; 10</span><br></pre></td></tr></table></figure><br>可以为矩阵命名，命名规则与大部分语言类似，即以字母，数字，下划线组合，但不能以数字为首字母。mata命名区分大小写。<br>如果矩阵已经被赋值，那么再对此矩阵赋值会覆盖之前的赋值。<br>输入变量的名字来显示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">B</span><br><span class="line"></span><br><span class="line">       1   2   3</span><br><span class="line">    +-------------+</span><br><span class="line">  1 |  5   6   7  |</span><br><span class="line">  2 |  8   9   10 |</span><br><span class="line">    +-------------+</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-1-2-创建向量"><a href="#3-1-2-创建向量" class="headerlink" title="3.1.2 创建向量"></a>3.1.2 创建向量</h3><p>向量就是$1\times n$或$n \times 1$的矩阵，向量的设置，此处不再赘述，但是要指出的是增加<code>&#39;</code>代表转置，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f &#x3D; (1, 2, 3)&#39;</span><br></pre></td></tr></table></figure><br>与<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f &#x3D; (  1 \ 2 \ 3  )</span><br></pre></td></tr></table></figure><br>等价<br>也可以使用一系列数字来创建一个列向量或是行向量，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">g &#x3D; (3::6)</span><br><span class="line">g</span><br><span class="line">       1</span><br><span class="line">    +-----+</span><br><span class="line">  1 |  3  |</span><br><span class="line">  2 |  4  |</span><br><span class="line">  3 |  5  |</span><br><span class="line">  4 |  6  |</span><br><span class="line">    +-----+</span><br><span class="line">g &#x3D; (3..6)</span><br><span class="line">g</span><br><span class="line">       1   2   3   4</span><br><span class="line">    +-----------------+</span><br><span class="line">  1 |  3   4   5   6  |</span><br><span class="line">    +-----------------+</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-1-3-创建标量"><a href="#3-1-3-创建标量" class="headerlink" title="3.1.3 创建标量"></a>3.1.3 创建标量</h3><p>一个标量就是一个$1\times1$的矩阵，如:<br><code>a = 2</code><br>但是需要注意的是矩阵命令区分标量和$1\times1$矩阵  </p>
+<h2 id="3-2-从stata访问数据"><a href="#3-2-从stata访问数据" class="headerlink" title="3.2 从stata访问数据"></a>3.2 从stata访问数据</h2><p>首先退出mata，然后获取数据集<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webuse auto.dta</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-2-1-创建一个数据的副本"><a href="#3-2-1-创建一个数据的副本" class="headerlink" title="3.2.1 创建一个数据的副本"></a>3.2.1 创建一个数据的副本</h3><p><code>st data(colvector, rowvector)</code>可以通过变量名复制在stata中的数据。如；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X &#x3D; st_data(.,(&quot;mpg&quot;, &quot;rep78&quot;, &quot;weight&quot;))</span><br></pre></td></tr></table></figure><br>创建了一个包含变量mpg,rep78,weight的数据集。，也可以复制其子矩阵，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X &#x3D; st_data((1::5\7::9),(&quot;mpg&quot;, &quot;rep78&quot;, &quot;weight&quot;))</span><br></pre></td></tr></table></figure><br>获取1至5与7至9行的子矩阵。<br>还可以使用函数<code>st_data(matrix, rowvector)</code>将对应编号的变量的值取出，如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">X &#x3D; st_data((1::5\7::9),(3, 4, 7))</span><br><span class="line">X</span><br><span class="line">          1      2      3</span><br><span class="line">    +----------------------+</span><br><span class="line">  1 |    22      3   2930  |</span><br><span class="line">  2 |    17      3   3350  |</span><br><span class="line">  3 |    22      .   2640  |</span><br><span class="line">  4 |    20      3   3250  |</span><br><span class="line">  5 |    15      4   4080  |</span><br><span class="line">  6 |    26      .   2230  |</span><br><span class="line">  7 |    20      3   3280  |</span><br><span class="line">  8 |    16      3   3880  |</span><br><span class="line">    +----------------------+</span><br><span class="line"> X &#x3D; st_data((1,5\7,9),(&quot;mpg&quot;, &quot;weight&quot;, &quot;rep78&quot;))</span><br><span class="line"> X</span><br><span class="line">           1      2      3</span><br><span class="line">    +----------------------+</span><br><span class="line">  1 |    22   2930      3  |</span><br><span class="line">  2 |    17   3350      3  |</span><br><span class="line">  3 |    22   2640      .  |</span><br><span class="line">  4 |    20   3250      3  |</span><br><span class="line">  5 |    15   4080      4  |</span><br><span class="line">  6 |    26   2230      .  |</span><br><span class="line">  7 |    20   3280      3  |</span><br><span class="line">  8 |    16   3880      3  |</span><br><span class="line">    +----------------------+</span><br></pre></td></tr></table></figure><br>取出内存中已载入数据集<code>auto</code>1至5行与7至9行，与3，4，7列的数据存入矩阵X中。<br>更多请查看<code>help mata:st_data</code></p>
+<h3 id="3-2-2-creating-a-view-on-the-data"><a href="#3-2-2-creating-a-view-on-the-data" class="headerlink" title="3.2.2 creating a view on the data"></a>3.2.2 creating a view on the data</h3><p>使用<code>st view(X, colvector, rowvector)</code>创建一个当前数据集的view(类似于把变量或某些行内的数据取出)，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X &#x3D; .</span><br><span class="line">st_view(X, ., (&quot;mpg&quot;, &quot;weight&quot;, &quot;rep78&quot;))</span><br></pre></td></tr></table></figure><br>该命令的意思是创建一个包含变量mpg，weight，rep78的值的矩阵X。<br>使用<code>st subview(Y, X, colvector, rowvector)</code>根据矩阵X创建一个新矩阵Y，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">st_view(X, ., .)</span><br><span class="line">st_subview(Y, X, (1::5\7::9), (3,4,7))</span><br></pre></td></tr></table></figure><br>用X矩阵的1到5行与7到9行的3，4，7列创建一个新矩阵Y。</p>
+<h3 id="3-2-3-copy-vs-view"><a href="#3-2-3-copy-vs-view" class="headerlink" title="3.2.3 copy vs. view"></a>3.2.3 copy vs. view</h3><p>这里所说的copy与view是指<code>st_data</code>与<code>st_view</code>两个函数的区别。<br><code>st_data</code>与<code>st_view</code>两个函数所实现的功能相似，但是，<code>st_data</code>运算更加快速，且不改变stata内存中的数据。<br>注意：对于字符串变量需使用<code>st_sdata</code>与<code>st_sview</code>函数。</p>
+<h2 id="3-3-管理mata的工作区"><a href="#3-3-管理mata的工作区" class="headerlink" title="3.3 管理mata的工作区"></a>3.3 管理mata的工作区</h2><p>使用命令<code>mata describe</code>查看mata中的所有变量。<br>使用命令<code>mata clear</code>删除mata工作空间的所有变量。<br>特定矩阵的删除可以使用命令<code>mata drop namelist</code></p>
+<h2 id="3-4-基本的矩阵操作"><a href="#3-4-基本的矩阵操作" class="headerlink" title="3.4 基本的矩阵操作"></a>3.4 基本的矩阵操作</h2><h3 id="3-4-1-矩阵的转置"><a href="#3-4-1-矩阵的转置" class="headerlink" title="3.4.1 矩阵的转置"></a>3.4.1 矩阵的转置</h3><p>矩阵的转置前文已说  </p>
+<h3 id="3-4-2-矩阵的分区"><a href="#3-4-2-矩阵的分区" class="headerlink" title="3.4.2 矩阵的分区"></a>3.4.2 矩阵的分区</h3><p>创建矩阵E<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">E &#x3D; (1,2,5,6,7\3,4,8,9,10\3,4,1,2,3\5,6,4,5,6)</span><br><span class="line">E</span><br><span class="line">        1    2    3    4    5</span><br><span class="line">    +--------------------------+</span><br><span class="line">  1 |   1    2    5    6    7  |</span><br><span class="line">  2 |   3    4    8    9   10  |</span><br><span class="line">  3 |   3    4    1    2    3  |</span><br><span class="line">  4 |   5    6    4    5    6  |</span><br><span class="line">    +--------------------------+</span><br></pre></td></tr></table></figure><br>使用<code>[]</code>进行矩阵的分区<br>如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">E[2, 3]</span><br><span class="line">8</span><br><span class="line">E[2,.]</span><br><span class="line">1 2 3 4 5</span><br><span class="line">+--------------------------+</span><br><span class="line">1  |  3 4 8 9  1  0  |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure><br>注意可以通过<em>range subscripts</em>提取矩阵的2到3行与2到4列。如下述命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">E[|2, 2\ 3, 4|]</span><br><span class="line">1 2 3</span><br><span class="line">+-------------+</span><br><span class="line">1 | 4 8 9 |</span><br><span class="line">2 | 4 1 2 |</span><br><span class="line">+-------------+</span><br></pre></td></tr></table></figure><br>也可以通过一个连续范围提取矩阵的2到3行与2到4列，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">E[(2::3), (2..4)]</span><br><span class="line">1 2 3</span><br><span class="line">+-------------+</span><br><span class="line">1 | 4 8 9 |</span><br><span class="line">2 | 4 1 2 |</span><br><span class="line">+-------------+</span><br></pre></td></tr></table></figure><br>注意：第一种方法的运算速度快于第二种。</p>
+</blockquote>
+<p>提取单个行和单个列组成矩阵：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">E[(1\ 4), (3, 5, 2)]</span><br><span class="line">1 2 3</span><br><span class="line">+-------------+</span><br><span class="line">1 | 5 7 2 |</span><br><span class="line">2 | 4 6 6 |</span><br><span class="line">+-------------+</span><br></pre></td></tr></table></figure><br>更加一般化的是，可以用两个定义好的变量来提取行和列，如；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">r &#x3D; (1\ 4)</span><br><span class="line">c &#x3D; (3, 5, 2)</span><br><span class="line">E[r,c]</span><br><span class="line">1 2 3</span><br><span class="line">+-------------+</span><br><span class="line">1 | 5 7 2 |</span><br><span class="line">2 | 4 6 6 |</span><br><span class="line">+-------------+</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意；尽管stata认为将第一个下标向量指定为列向量，将第二个下标向量指定为行向量是一种好方法，但是这并不是必须的。  </p>
+<h3 id="3-4-3-提取对角线并创建对角矩阵"><a href="#3-4-3-提取对角线并创建对角矩阵" class="headerlink" title="3.4.3 提取对角线并创建对角矩阵"></a>3.4.3 提取对角线并创建对角矩阵</h3><p><code>diagonal(A)</code>可以提取矩阵的对角线上的元素，并以列向量的形式表示，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">A &#x3D; (1,2,3\4,5,6\7,8,9)</span><br><span class="line">A</span><br><span class="line">       1   2   3</span><br><span class="line">    +-------------+</span><br><span class="line">  1 |  1   2   3  |</span><br><span class="line">  2 |  4   5   6  |</span><br><span class="line">  3 |  7   8   9  |</span><br><span class="line">    +-------------+</span><br><span class="line">b &#x3D; diagonal(A)</span><br><span class="line">b</span><br><span class="line">       1</span><br><span class="line">    +-----+</span><br><span class="line">  1 |  1  |</span><br><span class="line">  2 |  5  |</span><br><span class="line">  3 |  9  |</span><br><span class="line">    +-----+</span><br></pre></td></tr></table></figure><br><code>diag(b)</code>创建一个对角线为b向量的矩阵，如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> diag(b)</span><br><span class="line">[symmetric]</span><br><span class="line">       1   2   3</span><br><span class="line">    +-------------+</span><br><span class="line">  1 |  1          |</span><br><span class="line">  2 |  0   5      |</span><br><span class="line">  3 |  0   0   9  |</span><br><span class="line">    +-------------+</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-4-4-提取上下三角矩阵"><a href="#3-4-4-提取上下三角矩阵" class="headerlink" title="3.4.4 提取上下三角矩阵"></a>3.4.4 提取上下三角矩阵</h3><p><code>lowertriangle(A)</code>提取下三角矩阵，<code>uppertriangle(A)</code>提取上三角矩阵。</p>
+<h3 id="3-4-5-对矩阵进行排序"><a href="#3-4-5-对矩阵进行排序" class="headerlink" title="3.4.5 对矩阵进行排序"></a>3.4.5 对矩阵进行排序</h3><p><code>sort（X,idx）</code>返回一个以<code>idx</code>列排序的矩阵X，如<code>sort（X,1）</code>即以第一列对X进行排序 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">X &#x3D; (2, 3, 1\ 2, 2, 2\ 1, 1, 3)</span><br><span class="line">X</span><br><span class="line">1 2 3</span><br><span class="line">+-------------+</span><br><span class="line">1 | 2 3 1 |</span><br><span class="line">2 | 2 2 2 |</span><br><span class="line">3 | 1 1 3 |</span><br><span class="line">+-------------+</span><br><span class="line">sort(X,1)</span><br><span class="line">1 2 3</span><br><span class="line">+-------------+</span><br><span class="line">1 | 1 1 3 |</span><br><span class="line">2 | 2 3 1 |</span><br><span class="line">3 | 2 2 2 |</span><br><span class="line">+-------------+</span><br></pre></td></tr></table></figure>
+<p>使用<code>help mata sort()</code>可获取更多信息。  </p>
+</blockquote>
+<h2 id="3-5-基本的矩阵运算符号"><a href="#3-5-基本的矩阵运算符号" class="headerlink" title="3.5 基本的矩阵运算符号"></a>3.5 基本的矩阵运算符号</h2><p>+，$\times$，-，/，^ </p>
+<p>接下来的运算符号，以例子的形式讲解。<br>设定矩阵：  </p>
+<pre><code>a = (1..5)
+b = (6::10)
+c = 3
+</code></pre><p>矩阵的 + 与 $\times$与数学上的定义相同 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">d&#x3D;a+c*a</span><br><span class="line">d</span><br><span class="line">1 2 3 4 5</span><br><span class="line">+--------------------------+</span><br><span class="line">1 |  4  8  12  16  20 |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
+<h2 id="3-6-矩阵乘法"><a href="#3-6-矩阵乘法" class="headerlink" title="3.6 矩阵乘法"></a>3.6 矩阵乘法</h2><p>函数<code>cross(X, Z)</code>可以计算X’Z。<code>cross(X, Z)</code>函数计算有以下三点优势</p>
+<ul>
+<li>自动忽略缺省值</li>
+<li>运算速度快</li>
+<li>占用空间小   <h3 id="3-6-1-Element-by-element-operators"><a href="#3-6-1-Element-by-element-operators" class="headerlink" title="3.6.1 Element-by-element operators"></a>3.6.1 Element-by-element operators</h3>即矩阵间，各个内部元素（后文称之为colon）的相互运算，而不是两个矩阵的运算。运算符：  <code>:*</code> <code>:/</code> <code>:^</code>，例如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x &#x3D; (1, 2, 3)</span><br><span class="line">y &#x3D; (4, 5, 6)</span><br><span class="line">x:*y</span><br><span class="line">1 2 3</span><br><span class="line">        1    2    3</span><br><span class="line">    +----------------+</span><br><span class="line">  1 |   4   10   18  |</span><br><span class="line">    +----------------+</span><br></pre></td></tr></table></figure>
+就是各个元素对应的乘积。  <h3 id="3-6-2-关系与逻辑运算符"><a href="#3-6-2-关系与逻辑运算符" class="headerlink" title="3.6.2 关系与逻辑运算符"></a>3.6.2 关系与逻辑运算符</h3>等价运算符：<br>等于： <code>==</code><br>不等于 <code>!=</code><br>此关系运算符用于标量，向量和矩阵。<br>关系运算符：<br><code>&lt;</code> <code>&gt;</code>  <code>&gt;=</code>  <code>&lt;=</code><br>colo relational operator，在之前的运算符前加上<code>:</code>即可，如<code>:==</code> 例子：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">G &#x3D; (1, 2 \ 3, 4)</span><br><span class="line">H &#x3D; (1, 5 \ 6, 4)</span><br><span class="line">G :&#x3D;&#x3D; H</span><br><span class="line">       1   2</span><br><span class="line">    +---------+</span><br><span class="line">  1 |  1      |</span><br><span class="line">  2 |  0   1  |</span><br><span class="line">    +---------+</span><br></pre></td></tr></table></figure>
+逻辑运算符：<br><code>&amp;</code> <code>&amp;&amp;</code> 和<br><code>|</code> <code>||</code> 或<br>同样可以加<code>:</code> <h2 id="3-7-一些特殊矩阵的创建"><a href="#3-7-一些特殊矩阵的创建" class="headerlink" title="3.7 一些特殊矩阵的创建"></a>3.7 一些特殊矩阵的创建</h2><h3 id="3-7-1-创建一个含相同元素的矩阵"><a href="#3-7-1-创建一个含相同元素的矩阵" class="headerlink" title="3.7.1 创建一个含相同元素的矩阵"></a>3.7.1 创建一个含相同元素的矩阵</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">J(2, 3, 0)</span><br><span class="line">      1   2   3</span><br><span class="line">   +-------------+</span><br><span class="line"> 1 |  0   0   0  |</span><br><span class="line"> 2 |  0   0   0  |</span><br><span class="line">   +-------------+</span><br></pre></td></tr></table></figure>
+<h3 id="3-7-2-创建一个单位阵"><a href="#3-7-2-创建一个单位阵" class="headerlink" title="3.7.2 创建一个单位阵"></a>3.7.2 创建一个单位阵</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> I(3)</span><br><span class="line">[symmetric]</span><br><span class="line">       1   2   3</span><br><span class="line">    +-------------+</span><br><span class="line">  1 |  1          |</span><br><span class="line">  2 |  0   1      |</span><br><span class="line">  3 |  0   0   1  |</span><br><span class="line">    +-------------+</span><br></pre></td></tr></table></figure>
+<h3 id="3-7-3-创建单位向量"><a href="#3-7-3-创建单位向量" class="headerlink" title="3.7.3 创建单位向量"></a>3.7.3 创建单位向量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">e(2, 5)</span><br><span class="line">      1   2   3   4   5</span><br><span class="line">   +---------------------+</span><br><span class="line"> 1 |  0   1   0   0   0  |</span><br><span class="line">   +---------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="3-7-4-创建随机矩阵"><a href="#3-7-4-创建随机矩阵" class="headerlink" title="3.7.4 创建随机矩阵"></a>3.7.4 创建随机矩阵</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">uniform(2, 3)</span><br><span class="line">                1             2             3</span><br><span class="line">   +-------------------------------------------+</span><br><span class="line"> 1 |  .3488717046   .2668857098   .1366462945  |</span><br><span class="line"> 2 |  .0285568673   .8689332692    .350854896  |</span><br><span class="line">   +-------------------------------------------+</span><br></pre></td></tr></table></figure>
+<code>uniform()</code>创建的是一个0，1之间的随机数。<br><code>uniformseed(newseed)</code>与stata中一样可以设立一个随机种子，以使结果具有可重复性。<br>mata无法直接生成随机正态分布的矩阵，但可以通过嵌套的方法来实现，如：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">invnormal(uniform(2,3))</span><br><span class="line">                 1              2              3</span><br><span class="line">   +----------------------------------------------+</span><br><span class="line"> 1 |  -1.467610024   -.4583014284    .1385652864  |</span><br><span class="line"> 2 |   1.155176934   -.8249166005    1.241333377  |</span><br><span class="line">   +----------------------------------------------+</span><br></pre></td></tr></table></figure>
+<h2 id="3-8-逆与线性代数"><a href="#3-8-逆与线性代数" class="headerlink" title="3.8 逆与线性代数"></a>3.8 逆与线性代数</h2>mata有多种计算矩阵逆的函数：<br><code>luinv(A)</code>  A为满秩，方阵<br><code>cholinv(A)</code> A为正定对称矩阵<br><code>invsym(A)</code>  generalized inverse of positive-definite, symmetric matrix A<br>mata也提供了一些方法来求解线性方程组$AX=B$：<br><code>lusolve(A,B)</code> A为满秩，方阵。<br><code>cholinv(A)</code> A为正定对称矩阵。<br><code>help m4 solvers</code>获得更多相关函数<br>一个使用<code>auto.data</code>数据进行线性回归的例子：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">y &#x3D; st_data(.,&quot;price&quot;)</span><br><span class="line">X &#x3D; st_data(.,(&quot;mpg&quot;, &quot;weight&quot;))</span><br><span class="line">X &#x3D; X, J(rows(X),1,1)</span><br><span class="line">b &#x3D; invsym(X’*X)*X’*y</span><br></pre></td></tr></table></figure>
+<h1 id="4-Controlling-the-flow"><a href="#4-Controlling-the-flow" class="headerlink" title="4. Controlling the flow"></a>4. Controlling the flow</h1>此处的流程控制语句与c中类似<h2 id="4-1-循环语句"><a href="#4-1-循环语句" class="headerlink" title="4.1 循环语句"></a>4.1 循环语句</h2>while-loop：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">while (expr) &#123;</span><br><span class="line">stmt</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+例如:  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">n &#x3D; 5</span><br><span class="line">i &#x3D; 1</span><br><span class="line">while (i&lt;&#x3D;n) &#123;</span><br><span class="line">printf(&quot;i&#x3D;%g\n&quot;, i)</span><br><span class="line">i++</span><br><span class="line">&#125;</span><br><span class="line">printf(&quot;done\n&quot;)</span><br></pre></td></tr></table></figure>
+for-loop<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (expr1; expr2; expr3) &#123;</span><br><span class="line">stmts</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+例如:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">n &#x3D; 5</span><br><span class="line">for (i&#x3D;1; i&lt;&#x3D;n; i++) &#123;</span><br><span class="line">printf(&quot;i&#x3D;%g\n&quot;, i)</span><br><span class="line">&#125;</span><br><span class="line">printf(&quot;done\n&quot;)</span><br></pre></td></tr></table></figure>
+do循环<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">do &#123;</span><br><span class="line">stmt</span><br><span class="line">&#125; while (exp)</span><br></pre></td></tr></table></figure>
+<h2 id="4-2-条件语句"><a href="#4-2-条件语句" class="headerlink" title="4.2 条件语句"></a>4.2 条件语句</h2>if condition<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> if (expr) &#123;</span><br><span class="line">stmt</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="5-编码-mata-函数"><a href="#5-编码-mata-函数" class="headerlink" title="5. 编码 mata 函数"></a>5. 编码 mata 函数</h1>mata允许创建一些新函数，例如:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function zeros(c)</span><br><span class="line">&#123;</span><br><span class="line">a &#x3D; J(c, 1, 0)</span><br><span class="line">return(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+输出结果<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">b &#x3D; zeros(3)</span><br><span class="line"> b</span><br><span class="line">       1</span><br><span class="line">    +-----+</span><br><span class="line">  1 |  0  |</span><br><span class="line">  2 |  0  |</span><br><span class="line">  3 |  0  |</span><br><span class="line">    +-----+</span><br></pre></td></tr></table></figure>
+<h2 id="5-1-declarations"><a href="#5-1-declarations" class="headerlink" title="5.1 declarations"></a>5.1 declarations</h2>mata中不需要像其他语言中那样声明创建变量的类型，但是mata建议你声明。<br>element type：<code>transmorphic, numeric, real,complex, string, pointer</code><br>organizational type：<code>matrix, vector, rowvector, colvector, scalar</code><br>但是，mata中可以强制要求声明：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set matastrict on</span><br></pre></td></tr></table></figure>
+<h1 id="6-Controlling-the-flow"><a href="#6-Controlling-the-flow" class="headerlink" title="6. Controlling the flow"></a>6. Controlling the flow</h1>此处的流程控制语句与c中类似<h2 id="6-1-循环语句"><a href="#6-1-循环语句" class="headerlink" title="6.1 循环语句"></a>6.1 循环语句</h2>while-loop：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">while (expr) &#123;</span><br><span class="line">stmt</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+例如:  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">n &#x3D; 5</span><br><span class="line">i &#x3D; 1</span><br><span class="line">while (i&lt;&#x3D;n) &#123;</span><br><span class="line">printf(&quot;i&#x3D;%g\n&quot;, i)</span><br><span class="line">i++</span><br><span class="line">&#125;</span><br><span class="line">printf(&quot;done\n&quot;)</span><br></pre></td></tr></table></figure>
+for-loop<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (expr1; expr2; expr3) &#123;</span><br><span class="line">stmts</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+例如：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">n &#x3D; 5</span><br><span class="line">for (i&#x3D;1; i&lt;&#x3D;n; i++) &#123;</span><br><span class="line">printf(&quot;i&#x3D;%g\n&quot;, i)</span><br><span class="line">&#125;</span><br><span class="line">printf(&quot;done\n&quot;)</span><br></pre></td></tr></table></figure>
+do-循环 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">do &#123;</span><br><span class="line">stmt</span><br><span class="line">&#125; while (exp)</span><br></pre></td></tr></table></figure>
+<h2 id="6-2-条件语句"><a href="#6-2-条件语句" class="headerlink" title="6.2 条件语句"></a>6.2 条件语句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> if condition  </span><br><span class="line"> if (expr) &#123;</span><br><span class="line">stmt</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="7-编码-mata-函数"><a href="#7-编码-mata-函数" class="headerlink" title="7. 编码 mata 函数"></a>7. 编码 mata 函数</h1>mata允许创建一些新函数，例如： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function zeros(c)</span><br><span class="line">&#123;</span><br><span class="line">a &#x3D; J(c, 1, 0)</span><br><span class="line">return(a)</span><br><span class="line">&#125;</span><br><span class="line">输出结果</span><br><span class="line"></span><br><span class="line">b &#x3D; zeros(3)</span><br><span class="line"> b</span><br><span class="line">       1</span><br><span class="line">    +-----+</span><br><span class="line">  1 |  0  |</span><br><span class="line">  2 |  0  |</span><br><span class="line">  3 |  0  |</span><br><span class="line">    +-----+</span><br></pre></td></tr></table></figure>
+<h2 id="7-1-declarations"><a href="#7-1-declarations" class="headerlink" title="7.1 declarations"></a>7.1 declarations</h2>mata中不需要像其他语言中那样声明创建变量的类型，但是mata建议你声明。<br>element type：<code>transmorphic, numeric, real,complex, string, pointer</code><br>organizational type：<code>matrix, vector, rowvector, colvector, scalar</code><br>例如之前的<code>zeros()</code>程序：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">real colvector zeros(real scalar c)</span><br><span class="line">&#123;</span><br><span class="line">real colvector a</span><br><span class="line">a &#x3D; J(c,1,0)</span><br><span class="line">return(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+但是，mata中可以强制要求声明：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set matastrict on</span><br></pre></td></tr></table></figure>
+<h2 id="7-2-传递参数（stata中的argument）"><a href="#7-2-传递参数（stata中的argument）" class="headerlink" title="7.2 传递参数（stata中的argument）"></a>7.2 传递参数（stata中的argument）</h2>function中如果有多个需要传递的参数，则这些参数可以用<code>,</code>隔开，对于之前的<code>zero()</code>如：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">real matrix zeros(real scalar c, real scalar r)</span><br><span class="line">&#123;</span><br><span class="line">  real matrix A</span><br><span class="line">  A &#x3D; J(c, r, 0)</span><br><span class="line">  return(A)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+mata中的函数还允许设定可选的参数，可选参数通过’|’隔离来设置，同样对于之前的<code>zero()</code>函数：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">real matrix zeros(real scalar c,| real scalar r)</span><br><span class="line">&#123;</span><br><span class="line">real matrix A</span><br><span class="line">if (args()&#x3D;&#x3D;1) r &#x3D; 1</span><br><span class="line">A &#x3D; J(c, r, 0)</span><br><span class="line">return(A)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+函数<code>args()</code>决定参数的数量。<code>help m2 syntax</code>获取更多信息。<blockquote>
+<p>注意： mata传递的是参数的地址，而不是参数的值。  </p>
+</blockquote>
+</li>
+</ul>
+<h2 id="7-3-返回值"><a href="#7-3-返回值" class="headerlink" title="7.3 返回值"></a>7.3 返回值</h2><p>使用函数<code>return(expr)</code>会结束当前函数进程，且返回相应的值。如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">real matrix zeros(real scalar c,| real scalar r)</span><br><span class="line">&#123;</span><br><span class="line">if (args()&#x3D;&#x3D;1) &#123;</span><br><span class="line">    return(J(c, 1, 0))</span><br><span class="line">&#125;</span><br><span class="line">else &#123;</span><br><span class="line">    return(J(c, r, 0))</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>此时会返回一个矩阵<br>如果一个函数不返回任何东西，则称此函数为void，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void zeros(real matrix A, real scalar c,| real scalar r)</span><br><span class="line">&#123;</span><br><span class="line">if (args()&#x3D;&#x3D;1) &#123;</span><br><span class="line">A &#x3D; J(c, 1, 0)</span><br><span class="line">&#125;</span><br><span class="line">else &#123;</span><br><span class="line">A &#x3D; J(c, r, 0)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>此时函数不会返回任何值。  </p>
+<h2 id="7-4-mo和-mlib文件"><a href="#7-4-mo和-mlib文件" class="headerlink" title="7.4 .mo和.mlib文件"></a>7.4 .mo和.mlib文件</h2><p>使用<code>mata mosave</code>可以将函数保存至文件中，这样在stata中可以随时调用，而不用重新定义，例如创建一个.do文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">version 10</span><br><span class="line">mata:</span><br><span class="line">real matrix zeros(real scalar c,| real scalar r)</span><br><span class="line">&#123;</span><br><span class="line">real matrix A</span><br><span class="line">if (args()&#x3D;&#x3D;1) r &#x3D; 1</span><br><span class="line">A &#x3D; J(c, r, 0)</span><br><span class="line">return(A)</span><br><span class="line">&#125;</span><br><span class="line">mata mosave zeros(), replace</span><br><span class="line">end</span><br></pre></td></tr></table></figure><br>运行后，会创建一个<code>zeros.mo</code>文件存储在工作目录下。如果你关闭stata，再打开stata，该函数同样可以运行。<br>多个函数文件可以存储在.mlib文件中。  </p>
+<h1 id="8-使用mata编码stata命令"><a href="#8-使用mata编码stata命令" class="headerlink" title="8. 使用mata编码stata命令"></a>8. 使用mata编码stata命令</h1><h2 id="8-1-一个例子"><a href="#8-1-一个例子" class="headerlink" title="8.1 一个例子"></a>8.1 一个例子</h2><p>创建一个ols回归的命令,文件保存至一个.ado文件，即可调用。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">program</span> define ols, eclass</span><br><span class="line"><span class="keyword">version</span> 10.0</span><br><span class="line"><span class="keyword">syntax</span> <span class="keyword">varlist</span>(numeric) [<span class="keyword">if</span>] [<span class="keyword">in</span>]</span><br><span class="line"><span class="keyword">gettoken</span> depvar indepvar: <span class="keyword">varlist</span></span><br><span class="line"><span class="keyword">marksample</span> touse</span><br><span class="line"><span class="keyword">mata</span>: m_ols(<span class="string">"‘varlist’"</span>, <span class="string">"‘touse’"</span>)</span><br><span class="line"><span class="keyword">tempname</span> b V</span><br><span class="line"><span class="keyword">matrix</span> ‘b’ = <span class="built_in">r</span>(b)’</span><br><span class="line"><span class="keyword">matrix</span> ‘V’ = <span class="built_in">r</span>(V)</span><br><span class="line"><span class="keyword">local</span> <span class="keyword">N</span> = <span class="built_in">r</span>(<span class="keyword">N</span>)</span><br><span class="line"><span class="keyword">matname</span> ‘b’ ‘indepvar’ _cons, c(.)</span><br><span class="line"><span class="keyword">matname</span> ‘V’ ‘indepvar’ _cons</span><br><span class="line"><span class="keyword">ereturn</span> <span class="keyword">post</span> ‘b’ ‘V’, depname(‘depvar’) obs(‘<span class="keyword">N</span>’) esample(‘touse’)</span><br><span class="line"><span class="keyword">ereturn</span> <span class="keyword">local</span> cmd = <span class="string">"ols"</span></span><br><span class="line"><span class="keyword">ereturn</span> <span class="keyword">display</span></span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">capture</span> <span class="keyword">mata</span> <span class="keyword">mata</span> <span class="keyword">drop</span> m_ols()</span><br><span class="line"><span class="keyword">version</span> 10</span><br><span class="line"><span class="keyword">mata</span>:</span><br><span class="line">void m_ols(string <span class="keyword">scalar</span> <span class="keyword">varlist</span>, string <span class="keyword">scalar</span> touse)</span><br><span class="line">&#123;</span><br><span class="line">real <span class="keyword">matrix</span>  <span class="keyword">M</span>, X, V</span><br><span class="line">real colvector  y, b</span><br><span class="line">real <span class="keyword">scalar</span>  <span class="keyword">n</span>, k, s2</span><br><span class="line"><span class="keyword">M</span> = X = y = .</span><br><span class="line">st_view(<span class="keyword">M</span>, ., tokens(<span class="keyword">varlist</span>), touse)</span><br><span class="line">st_subview(y, <span class="keyword">M</span>, ., 1)</span><br><span class="line">st_subview(X, <span class="keyword">M</span>, ., (2\.))</span><br><span class="line"><span class="keyword">n</span> = rows(X)</span><br><span class="line">k = cols(X)</span><br><span class="line">XX = <span class="keyword">cross</span>(X,1,X,1)</span><br><span class="line"><span class="keyword">if</span> (rank(XX) &lt; k+1) &#123;</span><br><span class="line">errprintf(<span class="string">"near singular matrix\n"</span>)</span><br><span class="line"><span class="keyword">exit</span>(499)</span><br><span class="line">&#125;</span><br><span class="line">Xy = <span class="keyword">cross</span>(X,1,y,0)</span><br><span class="line">b = cholsolve(XX,Xy)</span><br><span class="line"><span class="keyword">e</span> = y - (X, <span class="built_in">J</span>(<span class="keyword">n</span>,1,1))*b</span><br><span class="line">s2 = (<span class="keyword">e</span>’<span class="keyword">e</span>)/(<span class="keyword">n</span>-k)</span><br><span class="line">V = s2*cholinv(XX)</span><br><span class="line">st_eclear()</span><br><span class="line">st_matrix(<span class="string">"r(b)"</span>, b)</span><br><span class="line">st_matrix(<span class="string">"r(V)"</span>, V)</span><br><span class="line">st_numscalar(<span class="string">"r(N)"</span>, <span class="keyword">n</span>)</span><br><span class="line">&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>谢谢你请我吃糖果</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="肖夕木 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="肖夕木 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    肖夕木
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaoximu.top/mata%E5%AD%A6%E4%B9%A0.html" title="mata学习-《Coding with Mata in Stata》">http://xiaoximu.top/mata%E5%AD%A6%E4%B9%A0.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mata/" rel="tag"># mata</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/stata-%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6.html" rel="next" title="stata-如何快速合并多个文件夹下的数据文件">
+                <i class="fa fa-chevron-left"></i> stata-如何快速合并多个文件夹下的数据文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80OTY5Ny8yNjE4OA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="肖夕木" />
+            
+              <p class="site-author-name" itemprop="name">肖夕木</p>
+              <p class="site-description motion-element" itemprop="description">经济学小白</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-为什么学习mata"><span class="nav-number">1.</span> <span class="nav-text">1. 为什么学习mata</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-在stata中使用mata"><span class="nav-number">2.</span> <span class="nav-text">2. 在stata中使用mata</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-命令行的使用"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 命令行的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-在-do文件中使用mata"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 在.do文件中使用mata</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-在-ado文件中使用mata"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 在.ado文件中使用mata</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-mata中的矩阵"><span class="nav-number">3.</span> <span class="nav-text">3. mata中的矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-create矩阵，向量和标量"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 create矩阵，向量和标量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-创建矩阵"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 创建矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-创建向量"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 创建向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-3-创建标量"><span class="nav-number">3.1.3.</span> <span class="nav-text">3.1.3 创建标量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-从stata访问数据"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 从stata访问数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-创建一个数据的副本"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 创建一个数据的副本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-creating-a-view-on-the-data"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 creating a view on the data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-copy-vs-view"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 copy vs. view</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-管理mata的工作区"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 管理mata的工作区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-基本的矩阵操作"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 基本的矩阵操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-1-矩阵的转置"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1 矩阵的转置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-2-矩阵的分区"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2 矩阵的分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-3-提取对角线并创建对角矩阵"><span class="nav-number">3.4.3.</span> <span class="nav-text">3.4.3 提取对角线并创建对角矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-4-提取上下三角矩阵"><span class="nav-number">3.4.4.</span> <span class="nav-text">3.4.4 提取上下三角矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-5-对矩阵进行排序"><span class="nav-number">3.4.5.</span> <span class="nav-text">3.4.5 对矩阵进行排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-基本的矩阵运算符号"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 基本的矩阵运算符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-6-矩阵乘法"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 矩阵乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-1-Element-by-element-operators"><span class="nav-number">3.6.1.</span> <span class="nav-text">3.6.1 Element-by-element operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-2-关系与逻辑运算符"><span class="nav-number">3.6.2.</span> <span class="nav-text">3.6.2 关系与逻辑运算符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-7-一些特殊矩阵的创建"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 一些特殊矩阵的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-1-创建一个含相同元素的矩阵"><span class="nav-number">3.7.1.</span> <span class="nav-text">3.7.1 创建一个含相同元素的矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-2-创建一个单位阵"><span class="nav-number">3.7.2.</span> <span class="nav-text">3.7.2 创建一个单位阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-3-创建单位向量"><span class="nav-number">3.7.3.</span> <span class="nav-text">3.7.3 创建单位向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-4-创建随机矩阵"><span class="nav-number">3.7.4.</span> <span class="nav-text">3.7.4 创建随机矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-8-逆与线性代数"><span class="nav-number">3.8.</span> <span class="nav-text">3.8 逆与线性代数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Controlling-the-flow"><span class="nav-number">4.</span> <span class="nav-text">4. Controlling the flow</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-循环语句"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 循环语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-条件语句"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 条件语句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-编码-mata-函数"><span class="nav-number">5.</span> <span class="nav-text">5. 编码 mata 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-declarations"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 declarations</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-Controlling-the-flow"><span class="nav-number">6.</span> <span class="nav-text">6. Controlling the flow</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-循环语句"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 循环语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-条件语句"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 条件语句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-编码-mata-函数"><span class="nav-number">7.</span> <span class="nav-text">7. 编码 mata 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-declarations"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 declarations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-传递参数（stata中的argument）"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 传递参数（stata中的argument）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-返回值"><span class="nav-number">7.3.</span> <span class="nav-text">7.3 返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-4-mo和-mlib文件"><span class="nav-number">7.4.</span> <span class="nav-text">7.4 .mo和.mlib文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-使用mata编码stata命令"><span class="nav-number">8.</span> <span class="nav-text">8. 使用mata编码stata命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-一个例子"><span class="nav-number">8.1.</span> <span class="nav-text">8.1 一个例子</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">肖夕木</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      浏览数 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

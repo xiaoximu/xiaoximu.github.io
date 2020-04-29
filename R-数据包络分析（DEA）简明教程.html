@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="肖夕木的自习室">
 <meta property="og:description" content="数据包络分析（DEA）是是由美国著名运筹学家 A.Charnes（查恩斯）、W.W.Cooper（库铂）、E.Rhodes（罗兹）于 1978 年首先提出，在相对效率评价概念基础上发展起来的一种非参数检验方法。此次文章主要介绍数据包络分析各种基础模型，以及在R中实现的方法。">
 <meta property="article:published_time" content="2020-04-24T08:47:39.000Z">
-<meta property="article:modified_time" content="2020-04-24T13:10:13.023Z">
+<meta property="article:modified_time" content="2020-04-26T00:01:42.961Z">
 <meta property="article:author" content="肖夕木">
 <meta property="article:tag" content="DEA">
 <meta name="twitter:card" content="summary">
@@ -357,7 +357,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  518
+                  686
                 </span>
               
 
@@ -373,7 +373,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -448,8 +448,8 @@
 </div>
 <p>在此表中，$y/x$反应各个生产单元技术效率的高低，$y/x$(标准化)是将各单元的$y/x$除以其中的最大值。这样就是为了更好的比较这一数值。<br>当涉及多个产出时，就会对各个投入与产出赋予一定的权重，然后分别加权，计算产出投入比。如：</p>
 <script type="math/tex; mode=display">v = v_1x_1+v_2x_2+...+v_nx_n</script><script type="math/tex; mode=display">u=u_1y_1+u_2y_2+...+u_ny_n</script><p>则产出投入比为$u/v$<br>数据包络分析就是在讨论如何通过数据本身来获得权重，从而计算各个DMU的技术效率。  </p>
-<h1 id="CCR模型与BCC模型"><a href="#CCR模型与BCC模型" class="headerlink" title="CCR模型与BCC模型"></a>CCR模型与BCC模型</h1><p>CCR模型是Charnes、Cooper、Rhodes三人发表的“Measuring the efﬁciency of decision making units”中提出的模型。而由于CCR模型基于规模效益不变（CRS）假说，因此又可称之为CRS模型。<br>未完待续。。。。 </p>
-
+<h1 id="CCR模型与BCC模型"><a href="#CCR模型与BCC模型" class="headerlink" title="CCR模型与BCC模型"></a>CCR模型与BCC模型</h1><p>CCR模型是Charnes、Cooper、Rhodes三人发表的“Measuring the efﬁciency of decision making units”中提出的模型。而由于CCR模型基于规模效益不变（CRS）假说，因此又可称之为CRS模型。<br>BCC模型是Banker，Charnes，Cooper三人发表的“Some Models for Estimating Technical and Scale Inefﬁciencies in Data Envelopment Analysis”中提出的。而由于BCC模型是基于规模收益可变（VRS）的，因此又称之为VRS模型。<br>接下来对BCC的模型推导做一个简单的介绍：<br>假设有$n$个$DMU$，记为$DMU_j（j=1,2,3…n）$。每个$DMU$有$m$种投入，记为$x_i（i=1,2,3…m）$，投入的权重表示为$v_i（i=1,2,3…m）$；$q$种产出，记为$y_r（r=1,2,3…q）$，产出的权重表示为$u_r（r=1,2,3…q）$。当前要测量的$DMU$记为$DMU_k$，则其投入产出比为：  </p>
+<script type="math/tex; mode=display">{sum_{r=1}^q{u_ry_{rk}}}/{sum_{i=1}^m{v_ix_{ik}}}</script>
       
     </div>
     
@@ -624,7 +624,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -646,7 +646,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
