@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DEA," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="数据包络分析（DEA）是是由美国著名运筹学家 A.Charnes（查恩斯）、W.W.Cooper（库铂）、E.Rhodes（罗兹）于 1978 年首先提出，在相对效率评价概念基础上发展起来的一种非参数检验方法。此文章主要介绍如何在stata中进行DEA分析以及进行boostrap检验，用到的命令为tenonradial，teradialbc等。需要说明的是，尽管此命令的运算速度与矩阵的最大处理量要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="stata:数据包络分析（DEA）简明教程">
+<meta property="og:url" content="http://xiaoximu.top/stata-%E6%95%B0%E6%8D%AE%E5%8C%85%E7%BB%9C%E5%88%86%E6%9E%90%EF%BC%88DEA%EF%BC%89%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B.html">
+<meta property="og:site_name" content="肖夕木的自习室">
+<meta property="og:description" content="数据包络分析（DEA）是是由美国著名运筹学家 A.Charnes（查恩斯）、W.W.Cooper（库铂）、E.Rhodes（罗兹）于 1978 年首先提出，在相对效率评价概念基础上发展起来的一种非参数检验方法。此文章主要介绍如何在stata中进行DEA分析以及进行boostrap检验，用到的命令为tenonradial，teradialbc等。需要说明的是，尽管此命令的运算速度与矩阵的最大处理量要">
+<meta property="article:published_time" content="2020-05-02T08:47:39.000Z">
+<meta property="article:modified_time" content="2020-05-02T12:54:33.707Z">
+<meta property="article:author" content="肖夕木">
+<meta property="article:tag" content="DEA">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xiaoximu.top/stata-数据包络分析（DEA）简明教程.html"/>
+
+
+
+
+
+  <title>stata:数据包络分析（DEA）简明教程 | 肖夕木的自习室</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">肖夕木的自习室</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">一个经济学专业学生的学习分享网站</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xiaoximu.top/stata-%E6%95%B0%E6%8D%AE%E5%8C%85%E7%BB%9C%E5%88%86%E6%9E%90%EF%BC%88DEA%EF%BC%89%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="肖夕木">
+      <meta itemprop="description" content="经济学小白">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="肖夕木的自习室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">stata:数据包络分析（DEA）简明教程</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-02T16:47:39+08:00">
+                2020-05-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E9%87%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">计量</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">阅读数 <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>数据包络分析（DEA）是是由美国著名运筹学家 A.Charnes（查恩斯）、W.W.Cooper（库铂）、E.Rhodes（罗兹）于 1978 年首先提出，在相对效率评价概念基础上发展起来的一种非参数检验方法。此文章主要介绍如何在stata中进行DEA分析以及进行boostrap检验，用到的命令为<code>tenonradial</code>，<code>teradialbc</code>等。需要说明的是，尽管此命令的运算速度与矩阵的最大处理量要优于<code>dea</code>命令，但是其仍有一些限制。<br><a id="more"></a>  </p>
+<h1 id="DEA模型简介"><a href="#DEA模型简介" class="headerlink" title="DEA模型简介"></a>DEA模型简介</h1><h2 id="技术效率的概念"><a href="#技术效率的概念" class="headerlink" title="技术效率的概念"></a>技术效率的概念</h2><p>在数据包络分析中，技术效率是指一个生产单元（DMU）的生产水平达到该行业技术水平的程度。技术效率可以从投入和产出两个角度来衡量，在投入既定的情况下，技术效率由产出最大化的程度来衡量。在产出既定的情况下，技术效率由投入最小化的程度来衡量。当然，在计算TFP的过程中，一般都是投入既定的。<br>下面举一个一种投入一种产出时的例子，来帮助我们理解技术效率的概念。       </p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>单位</th>
+<th>$x$（投入）</th>
+<th>$y$（产出）</th>
+<th>$y/x$</th>
+<th>$y/x$(标准化)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>2</td>
+<td>1</td>
+<td>0.5</td>
+<td>0.625</td>
+</tr>
+<tr>
+<td>B</td>
+<td>3</td>
+<td>2</td>
+<td>0.667</td>
+<td>0.533</td>
+</tr>
+<tr>
+<td>C</td>
+<td>4</td>
+<td>3</td>
+<td>0.75</td>
+<td>0.938</td>
+</tr>
+<tr>
+<td>D</td>
+<td>5</td>
+<td>4</td>
+<td>0.8</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>E</td>
+<td>5</td>
+<td>2</td>
+<td>0.4</td>
+<td>0.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>在此表中，$y/x$反应各个生产单元技术效率的高低，$y/x$(标准化)是将各单元的$y/x$除以其中的最大值。这样就是为了更好的比较这一数值。<br>当涉及多个产出时，就会对各个投入与产出赋予一定的权重，然后分别加权，计算产出投入比。如：</p>
+<script type="math/tex; mode=display">v = v_1x_1+v_2x_2+...+v_nx_n</script><script type="math/tex; mode=display">u=u_1y_1+u_2y_2+...+u_ny_n</script><p>则产出投入比为$u/v$<br>数据包络分析就是在讨论如何通过数据本身来获得权重，从而计算各个DMU的技术效率。  </p>
+<h2 id="径向距离模型"><a href="#径向距离模型" class="headerlink" title="径向距离模型"></a>径向距离模型</h2><p>此命令径向效率的度量方法采用的是Debreu–Farrell(Debreu 1951; Farrell 1957)方法。假设有$k$个$DMU$。对于$DMU<em>K$，有$N$种投入，记为$x_k =（x</em>{k1},…,x<em>{kN}) \in R^N$,有$M$种产出，记为$y_k =（x</em>{k1},…,x_{kM}) \in R^M$。然后我们假设在技术条件$T$下产出$y$由投入$x$产出，数学表达为：  </p>
+<script type="math/tex; mode=display">T = \{(x,y):y\ are\ producible\ by\ x\}</script><p>那么在科技$T$下，生产可能集表示为：  </p>
+<script type="math/tex; mode=display">P(x) = \{y:(x,y) \in T\}</script><p>投入的需求集表示为：</p>
+<script type="math/tex; mode=display">P(y) = \{x:(x,y) \in T\}</script><p>以生产可能集为例，技术效率就表示为，某个给定数据点与生产可能集边界的距离。若以DEA模型来测量此种技术效率从，则对于$k$个$DMU$，每个$DMU$有$N$种投入，$M$种产出的数据集来说。Debreu–Farrell(Debreu 1951; Farrell 1957)的以产出为导向的估计方法，可以通过下述线性规的方程式来表示，对于每一个数据点$k(k= 1,2,3…K)$  </p>
+<script type="math/tex; mode=display">F_k^o(y_k,x_k,y,x|CRS)=max\theta  \\
+s.t. \sum_{k=1}^Kz_ky_{km} \geq y_{km}\theta_m,m=1,...,M \\
+\sum_{k=1}^Kz_kx_{kn} \leq x_{kn}\theta_n,n=1,...,N \\
+z_k \geq 0</script><p>其中$y$是一个$K\times M$的产出矩阵，$x$是一个$K\times N$的投入矩阵。估计$P(x)$是最小的包围面（smallest convex free-disposal hull ）。上述线性规划求解的是规模报酬不变（CRS）的技术效率。在其他关于规模报酬的假设下，只需改变$z<em>k$的约束，例如规模报酬可变（VRS），设置$\sum</em>{k=1}^Kz_k=1$即可。</p>
+<h2 id="非径向效率模型"><a href="#非径向效率模型" class="headerlink" title="非径向效率模型"></a>非径向效率模型</h2><p>此命令的非径向效率测量方法是Russell（Färe and Lovell 1978;<br>Färe, Grosskopf, and Lovell 1994a）法。则对于以产出为导向的非径向量度定义为：  </p>
+<script type="math/tex; mode=display">RM_k^o(y_K,x_K,y,x|CRS)=max \{M^{-1}\sum_{m=1}^M \theta_m: (\theta_1y_{k1},...,\theta_my_{km}\in P(x),\theta_m\geq0,m=1,...M)\}</script><p>其线性规划方程式定义为：  </p>
+<script type="math/tex; mode=display">RM_k^o(y_K,x_K,y,x|CRS)=M^{-1}max\sum_{m=1}^M \theta_m \\
+s.t. \sum_{k=1}^Kz_ky_{km} \geq y_{km}\theta_m,m=1,...,M \\
+\sum_{k=1}^Kz_kx_{kn} \leq x_{kn}\theta_n,n=1,...,N \\
+z_k \geq 0</script><h2 id="对径向模型使用Boostrap进行假设检验"><a href="#对径向模型使用Boostrap进行假设检验" class="headerlink" title="对径向模型使用Boostrap进行假设检验"></a>对径向模型使用Boostrap进行假设检验</h2><p>主要介绍此命令规模收益的两个假设检验，首先是：  </p>
+<script type="math/tex; mode=display">Test \neq 1: H_0: T\ is\ globally\ CRS \\
+H_1: T\ is\ VRS</script><p>如果假设$H_0$被拒绝，则可以进行下述假设检验：  </p>
+<script type="math/tex; mode=display">Test \neq 2: H_0': T\ is\ globally\ NIRS \\
+H_1: T\ is\ VRS</script><p>也是就是说先查看此技术条件下是否是规模报酬不变的，若不是再看是否是NIRS（Non-Decreasing Returns to scale）的。</p>
+<h1 id="stata命令的实现"><a href="#stata命令的实现" class="headerlink" title="stata命令的实现"></a>stata命令的实现</h1><h2 id="tenonradial命令"><a href="#tenonradial命令" class="headerlink" title="tenonradial命令"></a>tenonradial命令</h2><p><code>tenonradial</code>使用非径向模型RM估计技术效率，语法详情：<br><code>tenonradial outputs = inputs
+[(ref outputs = ref inputs)] [if] [in] [,rts(rtsassumption) base(basetype) reference(varname) tename(newvar) noprint]</code><br>其中<br><code>output</code>是产出变量<br><code>input</code>是投入变量<br><code>ref outputs</code>是产出变量的个数<br><code>ref inputs</code>是投入变量的个数<br><code>rts(rtsassumption)</code>指定规模收益假设，有CRS,VRS,NIRS三种<br><code>base(basetype)</code> 设置最优化的方向，即面向产出<code>base(output)</code>，面向投入<code>base(input)</code><br><code>reference(varname)</code>设定技术参考集<br><code>tename(newvar)</code>产生<code>newvar</code>，其包含非径向测量的技术效率。<br><code>noprint</code> 取消估算详细信息，数据描述和参考集。  </p>
+<h2 id="teradialbc命令"><a href="#teradialbc命令" class="headerlink" title="teradialbc命令"></a>teradialbc命令</h2><p><code>teradialbc</code>命令使用径向模型估计技术效率，语法详情：<br><code>teradialbc outputs = inputs
+[(ref outputs = ref inputs)] [if] [in] [,rts(rtsassumption)base(basetype) reference(varname) subsampling kappa(#) smoothed heterogeneous reps(#) level(#) tename(newvar) tebc(newvar) biasboot(newvar) varboot(newvar) biassqva(newvar)telower(newvar) teupper(newvar) noprint nodots]</code><br>其区别主要在于Boostrap部分，详细内容参见<code>help teradialbc</code>  </p>
+<h2 id="teradialbc命令的函数支持"><a href="#teradialbc命令的函数支持" class="headerlink" title="teradialbc命令的函数支持"></a>teradialbc命令的函数支持</h2><p>stata需要已下载<code>kdens bw()</code>与<code>mm quantile()</code>  </p>
+<h2 id="nptestind命令"><a href="#nptestind命令" class="headerlink" title="nptestind命令"></a>nptestind命令</h2><p><code>nptestind</code>进行独立性检验  </p>
+<h2 id="nptestrts命令"><a href="#nptestrts命令" class="headerlink" title="nptestrts命令"></a>nptestrts命令</h2><p><code>nptestrts</code>进行规模收益检验  </p>
+<h1 id="实例应用"><a href="#实例应用" class="headerlink" title="实例应用"></a>实例应用</h1><p>数据来源于Charnes, Cooper, and Rhodes (1981)，并人为的产生一个新变量<code>dref</code>来说明新命令的功能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">set seed 717117</span><br><span class="line">use ccr81</span><br><span class="line">generate dref &#x3D; x5 !&#x3D; 10</span><br><span class="line">teradial y1 y2 y3 &#x3D; x1 x2 x3 x4 x5, rts(crs) base(output) reference(dref) tename(TErdCRSo)</span><br><span class="line">teradial y1 y2 y3 &#x3D; x1 x2 x3 x4 x5, rts(nirs) base(output) reference(dref) tename(TErdNRSo) noprint</span><br><span class="line">teradial y1 y2 y3 &#x3D; x1 x2 x3 x4 x5, rts(vrs) base(output) reference(dref) tename(TErdVRSo) noprint</span><br><span class="line">tenonradial y1 y2 y3 &#x3D; x1 x2 x3 x4 x5, rts(crs) base(output) reference(dref) tename(TEnrCRSo) noprint</span><br><span class="line">tenonradial y1 y2 y3 &#x3D; x1 x2 x3 x4 x5, rts(nirs) base(output) reference(dref) tename(TEnrNRSo) noprint</span><br><span class="line">tenonradial y1 y2 y3 &#x3D; x1 x2 x3 x4 x5, rts(vrs) base(output) reference(dref) tename(TEnrVRSo) noprint</span><br><span class="line">list TErdCRSo TErdNRSo TErdVRSo TEnrCRSo TEnrNRSo TEnrVRSo in 1&#x2F;7</span><br></pre></td></tr></table></figure><br>分别使用径向与非径向模型测量三种规模收益状况下的技术效率。<br>接下来使用<code>nptestind</code>进行boostrap检验<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">matrix testsindpv &#x3D; J(2, 3, .)</span><br><span class="line">matrix colnames testsindpv &#x3D; CRS NiRS VRS </span><br><span class="line">matrix rownames testsindpv &#x3D; output-based input-based</span><br><span class="line">nptestind y1 y2 y3 &#x3D; x1 x2 x3 x4 x5, rts(crs) base(output) reps(999) alpha(0.05)</span><br><span class="line">matrix testsindpv[1,1] &#x3D; e(pvalue)</span><br><span class="line">nptestind y1 y2 y3 &#x3D; x1 x2 x3 x4 x5, rts(nirs) base(output) reps(999) alpha(0.05) noprint</span><br><span class="line">matrix testsindpv[1,2] &#x3D; e(pvalue)</span><br><span class="line">nptestind y1 y2 y3 &#x3D; x1 x2 x3 x4 x5, rts(vrs) base(output) reps(999) alpha(0.05) noprint</span><br><span class="line">matrix testsindpv[1,3] &#x3D; e(pvalue)</span><br><span class="line">nptestind y1 y2 y3 &#x3D; x1 x2 x3 x4 x5, rts(crs) base(input) reps(999) alpha(0.05) noprint</span><br><span class="line">matrix testsindpv[2,1] &#x3D; e(pvalue)</span><br><span class="line">nptestind y1 y2 y3 &#x3D; x1 x2 x3 x4 x5, rts(nirs) base(input) reps(999) alpha(0.05) noprint</span><br><span class="line">matrix testsindpv[2,2] &#x3D; e(pvalue)</span><br><span class="line">nptestind y1 y2 y3 &#x3D; x1 x2 x3 x4 x5, rts(vrs) base(input) reps(999) alpha(0.05) noprint</span><br><span class="line">matrix testsindpv[2,3] &#x3D; e(pvalue)</span><br><span class="line">matrix list testsindpv</span><br></pre></td></tr></table></figure><br>P值结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">                    CRS       NiRS        VRS</span><br><span class="line">output-based  .06906907  .25625626  .04804805</span><br><span class="line"> input-based  .03703704    .001001  .23323323</span><br></pre></td></tr></table></figure></p>
+<h2 id="Malmquist指数"><a href="#Malmquist指数" class="headerlink" title="Malmquist指数"></a>Malmquist指数</h2><p>Malmquist指数的计算与分解公式此处不再列出，只是用程序来举例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">use pwt56, clear</span><br><span class="line">reshape wide y k l, i(nu country) j(year)</span><br><span class="line">teradial y1965 &#x3D; k1965 l1965 (y1965 &#x3D; k1965 l1965), rts(crs) base(output) tename(F11) noprint</span><br><span class="line">teradial y1990 &#x3D; k1990 l1990 (y1965 &#x3D; k1965 l1965), rts(crs) base(output) tename(F21) noprint</span><br><span class="line">teradial y1965 &#x3D; k1965 l1965 (y1990 &#x3D; k1990 l1990), rts(crs) base(output) tename(F12) noprint</span><br><span class="line">teradial y1990 &#x3D; k1990 l1990 (y1990 &#x3D; k1990 l1990), rts(crs) base(output) tename(F22) noprint</span><br><span class="line">generate mpi &#x3D; sqrt(F12 &#x2F; F22 * F22 &#x2F; F21)</span><br><span class="line">generate effch &#x3D; F11 &#x2F; F22</span><br><span class="line">generate techch &#x3D; mpi &#x2F; effch</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>PS：文章中所用到的学习资料为《数据包络分析方法与MaxDea软件》与文章“Nonparametric frontier analysis using Stata<br>”，此资料可在我的公众号“肖夕木的自习室”中回复dea获取。至于文中的数据文件可以自行在stata上下载，当然，在我的dea学习资料中也有包含。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>谢谢你请我吃糖果</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="肖夕木 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="肖夕木 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    肖夕木
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaoximu.top/stata-%E6%95%B0%E6%8D%AE%E5%8C%85%E7%BB%9C%E5%88%86%E6%9E%90%EF%BC%88DEA%EF%BC%89%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B.html" title="stata:数据包络分析（DEA）简明教程">http://xiaoximu.top/stata-%E6%95%B0%E6%8D%AE%E5%8C%85%E7%BB%9C%E5%88%86%E6%9E%90%EF%BC%88DEA%EF%BC%89%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DEA/" rel="tag"># DEA</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/stata-mata%E5%AD%A6%E4%B9%A0.html" rel="next" title="mata学习-《Coding with Mata in Stata》">
+                <i class="fa fa-chevron-left"></i> mata学习-《Coding with Mata in Stata》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80OTY5Ny8yNjE4OA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="肖夕木" />
+            
+              <p class="site-author-name" itemprop="name">肖夕木</p>
+              <p class="site-description motion-element" itemprop="description">经济学小白</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DEA模型简介"><span class="nav-number">1.</span> <span class="nav-text">DEA模型简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#技术效率的概念"><span class="nav-number">1.1.</span> <span class="nav-text">技术效率的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#径向距离模型"><span class="nav-number">1.2.</span> <span class="nav-text">径向距离模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非径向效率模型"><span class="nav-number">1.3.</span> <span class="nav-text">非径向效率模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对径向模型使用Boostrap进行假设检验"><span class="nav-number">1.4.</span> <span class="nav-text">对径向模型使用Boostrap进行假设检验</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stata命令的实现"><span class="nav-number">2.</span> <span class="nav-text">stata命令的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tenonradial命令"><span class="nav-number">2.1.</span> <span class="nav-text">tenonradial命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#teradialbc命令"><span class="nav-number">2.2.</span> <span class="nav-text">teradialbc命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#teradialbc命令的函数支持"><span class="nav-number">2.3.</span> <span class="nav-text">teradialbc命令的函数支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nptestind命令"><span class="nav-number">2.4.</span> <span class="nav-text">nptestind命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nptestrts命令"><span class="nav-number">2.5.</span> <span class="nav-text">nptestrts命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例应用"><span class="nav-number">3.</span> <span class="nav-text">实例应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Malmquist指数"><span class="nav-number">3.1.</span> <span class="nav-text">Malmquist指数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">肖夕木</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      浏览数 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
